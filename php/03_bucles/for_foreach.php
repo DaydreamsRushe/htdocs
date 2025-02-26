@@ -35,5 +35,27 @@ $num = "";
 for($contador =0;$contador <=10;$contador++){
   $num .= "$numero x $contador = ". ($numero * $contador) . "<br/>";
 }
-pDump($num)
+pDump($num);
+echo "<hr>";
+$marcas_motos = ["Honda","Yamaha","Suzuki","kawasaki","Ducati"];
+
+echo $marcas_motos[4]. "<br>";
+echo "$marcas_motos[2]<br>";
+
+foreach ($marcas_motos as $value){
+  echo "$value<br>";
+}
+
+echo "<hr>";
+
+
+foreach($marcas_motos as $key => $value){
+  echo ($key + 1) . ": $value<br>";
+}
+
+$marcas_motos_asoc = ["Honda" => "Vmax","Yamaha"=>"Rd250","Suzuki"=>"S500","kawasaki"=>"Kamikaze","Ducati"=>"Scarver500"];
+echo "<hr>";
+foreach($marcas_motos_asoc as $indice => $value){
+  echo $indice . ": $value<br>";
+}
 ?>

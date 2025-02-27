@@ -4,9 +4,8 @@
 ?>
 
 <div>
-  <h1>Pagina INDEX</h1>
-  <h2><?= $encabezado_2; ?></h2>
-  <p>Texto de prueba de la pagina de inicio</p>
+  <h2>Este es la pagina de contacto de la empresa</h2>
+  <p><?= $content_contact; ?></p>
 </div>
 
 <?php

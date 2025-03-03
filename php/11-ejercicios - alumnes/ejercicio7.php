@@ -24,4 +24,4 @@ if($numero1+1 < $numero2){
   }
 }
 
-}else echo "Los dos son el mismo numero o son numeros consecutivos";
+}else echo "Los dos son el mismo numero o son numeros consecutivos y por lo tanto no tienen numeros entre ellos";

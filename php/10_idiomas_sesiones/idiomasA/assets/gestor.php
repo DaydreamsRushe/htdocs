@@ -19,7 +19,7 @@ require "lang/" .$_SESSION['idioma'] . ".php";
 
 function cabecera($lang)
 {
-  require '../vistas/cabecera.tpl';
+  require 'vistas/cabecera.tpl';
 }
 
 function menu($lang)
@@ -29,16 +29,16 @@ function menu($lang)
 
 function principal ($lang)
 {
-  require "../vistas/principal.tpl";
+  require "vistas/principal.tpl";
 }
 
 function footer($lang){
-  require "../vistas/footer.tpl";
+  require "vistas/footer.tpl";
 }
 
 function footer2($lang)
 {
-  require "../vistas/footer2.tpl";
+  require "vistas/footer2.tpl";
 }
 ?>
 

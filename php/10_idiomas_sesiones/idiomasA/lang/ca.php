@@ -9,7 +9,8 @@
     "opcion_3" => "Català",
     "descripcion" => "Hola, Aquest es el títol en Català",
     "m1" => "Home",
-    "m2" => "Producte"
+    "m2" => "Producte",
+    "title" => "Sistema de selecció Multilingual"
   ];
 
   //HOME

@@ -9,7 +9,8 @@
     "opcion_3" => "Catalan",
     "descripcion" => "Hola, Este es el titulo en Castellano",
     "m1" => "Home",
-    "m2" => "Producto"
+    "m2" => "Producto",
+    "title" => "Sistema de seleccion Multilingual",
   ];
 
   //HOME
@@ -28,7 +29,7 @@
     "cont1" => "Contenido del home",
     "cont2" => "Contenido 2 del home",
     "cont3" => "Contenido 3 del home",
-    "foot" => "Texto del footer de la pagina index"
+    "foot" => "Texto del footer de la pagina index",
   ];
 
   //PRODUCTO

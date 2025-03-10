@@ -24,9 +24,17 @@ function vistaRegistroCompletado($usuario, $email)
 
 function vistaRegistroCompletado($usuario, $email)
 {
+      $div = "<div>";
+      if(!empty($rows)){
+        foreach ($rows as $value) {
+          $div .= "<p>(" . $value['id'] . ") - " . $value['usuario'] . " : " . $value['email'] . "</p>";
+        }
+        $div .= "</div>"
+      }
       $params = [
             "usuario" => $usuario,
             "email" => $email,
+            "div" => $div,
       ];
       mostrarTpls($params, "../view/tpls/feedback.tpl");
 }

@@ -29,7 +29,7 @@ function vistaRegistroCompletado($usuario, $email)
         foreach ($rows as $value) {
           $div .= "<p>(" . $value['id'] . ") - " . $value['usuario'] . " : " . $value['email'] . "</p>";
         }
-        $div .= "</div>"
+        $div .= "</div>";
       }
       $params = [
             "usuario" => $usuario,

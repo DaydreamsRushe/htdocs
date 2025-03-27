@@ -22,7 +22,7 @@ function vistaRegistroCompletado($usuario, $email)
 }
 */
 
-function vistaRegistroCompletado($usuario, $email)
+function vistaRegistroCompletado($usuario, $email, $lang)
 {
       $div = "<div>";
       if(!empty($rows)){
@@ -36,6 +36,9 @@ function vistaRegistroCompletado($usuario, $email)
             "email" => $email,
             "div" => $div,
       ];
+
+      $params = array_merge($params, $lang)
+
       mostrarTpls($params, "../view/tpls/feedback.tpl");
 }
 

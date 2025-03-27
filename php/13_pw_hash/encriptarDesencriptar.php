@@ -7,7 +7,7 @@
  * son suficientemente rápidos. El código que sigue tiene como objetivo un tramo de
  * ≤ 50 milisegundos, que es una buena referencia para sistemas con registros interactivos.
  */
-/* $timeTarget = 1; // 50 milisegundos
+/* $timeTarget = 0.05; // 50 milisegundos
 
 $coste = 14;
 do {
@@ -18,8 +18,8 @@ do {
 } while (($fin - $inicio) < $timeTarget);
 
 echo "Coste apropiado encontrado: " . $coste . "<br>";
-echo "encriptado: " . $pw . "<br>"; 
-*/
+echo "encriptado: " . $pw . "<br>";  */
+
 $pw = password_hash("rasmbbuerdorf", PASSWORD_DEFAULT, ["cost" => 10]);
 echo "encriptado: " . $pw . "<br>";
 

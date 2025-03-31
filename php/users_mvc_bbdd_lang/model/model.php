@@ -35,7 +35,7 @@ function modeloRegistrarNuevoUsuario($usuario, $email, $password, $con)
             while ($row = $result->fetch_assoc()) {
                   $myrows[] = $row;
             }
-            return [$myrows, true]
+            return [$myrows, true];
       } else {
              return [null, false];
       }

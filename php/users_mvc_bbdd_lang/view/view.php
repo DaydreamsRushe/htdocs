@@ -1,11 +1,11 @@
 <?php
 
-function vistaRegistroCompletado($usuario, $email, $rows,$lang_feedback){
+function vistaRegistroCompletado($usuario, $email, $password, $rows, $lang_feedback){
       $div = "";
       if (!empty($rows)) {
             foreach ($rows as $value) {
                /*    $div .= "<p>(" . $value['id'] . ") - " . $value['usuario'] . "  :  " . $value['email'] . "</p>"; */
-                  $div .= "<tr><td>" . $value['id'] . "</td><td>" . $value['usuario'] . "</td><td>" . $value['email'] . "</td></tr>";
+                  $div .= "<tr><td>" . $value['id'] . "</td><td>" . $value['usuario'] . "</td><td>" . $value['email'] . "</td><td>". $value['password'] ."</td></tr>";
     
                   
             }

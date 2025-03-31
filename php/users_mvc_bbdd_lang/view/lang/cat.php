@@ -33,6 +33,6 @@ $lang_feedback=[
 	"registre_1" => "Gràcies per Registrar-se. Disposa de l'usuari : ",
 	"registre_2" => "Rebrà un correu de confirmació a la següent adreça electrònica:",
 	"tabla"=> "Aquests són els usuaris registrats fins ara:",
-	"tornar"=> "Tornar"
-	"password" => "Contrasenya"
+	"tornar"=> "Tornar",
+	"password" => "Contrasenya",
 ];

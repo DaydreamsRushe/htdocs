@@ -3,7 +3,7 @@ class Conexion
 {
       private $typedb = "mysql";
       private $host = "localhost";
-      private $namedb = "users2025;charset=UTF8mb4";
+      private $namedb = "users2025;charset=UTF8mb4";//nombre de base de datos (con charset si no esta definido)
       private $user = "root";
       private $pw = "";
 

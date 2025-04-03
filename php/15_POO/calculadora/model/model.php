@@ -1,59 +1,39 @@
 <?php
 
 class Operacion{
-  protected $numero1=0;
-  protected $numero2=0;
-}
+  public $numero1=0;
+  public $numero2;
+  public $tipo;
 
-class Suma extends Operacion{
-  public $tipo = "suma";
 
-  public function __construct($numero1, $numero2) {
-    parent::$numero1 = $numero1;
-    parent::$numero2 = $numero2;
+  public function __construct($numero1, $numero2, $tipo) {
+    $this->numero1 = $numero1;
+    $this->numero2 = $numero2;
+    $this->tipo = $tipo;
   }
+  
+  public function getNumeroUno(){
+    return $this->numero1;
+  }
+
+  public function getNumeroDos(){
+    return $this->numero2;
+  }
+
+  public function getTipo(){
+    return $this->tipo;
+  }
+
 
   public function operar(){
-    return parent::$numero1 + parent::$numero2;
+    if($this->tipo == 'suma'){
+      return $this->numero1 + $this->numero2;
+    }else if($this->tipo == 'resta'){
+      return $this->numero1 - $this->numero2;
+    }else if($this->tipo == 'mult'){
+      return $this->numero1 * $this->numero2;
+    }else if($this->tipo == 'div'){
+      return $this->numero1 / $this->numero2;
+    }
   }
 }
-
-class Resta extends Operacion{
-  public $tipo = "resta";
-
-  public function __construct($numero1, $numero2) {
-    parent::$numero1 = $numero1;
-    parent::$numero2 = $numero2;
-  }
-
-  public function operar(){
-    return parent::$numero1 - parent::$numero2;
-  }
-}
-
-class Multi extends Operacion{
-  public $tipo = "multiplicacion";
-
-  public function __construct($numero1, $numero2) {
-    parent::$numero1 = $numero1;
-    parent::$numero2 = $numero2;
-  }
-
-  public function operar(){
-    return parent::$numero1 * parent::$numero2;
-  }
-}
-class Divs extends Operacion{
-  public $tipo = "division";
-
-  public function __construct($numero1, $numero2) {
-    parent::$numero1 = $numero1;
-    parent::$numero2 = $numero2;
-  }
-
-  public function operar(){
-    return parent::$numero1 / parent::$numero2;
-  }
-}
-
-?>

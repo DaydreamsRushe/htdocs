@@ -5,7 +5,7 @@ class Conexion extends PDO
       const DB_HOST = 'localhost';
       const DB_USER = 'root';
       const DB_PASS = '';
-      const DB_NAME = "users2025;;charset=UTF8mb4";
+      const DB_NAME = "users2025;charset=UTF8mb4";
 
       public function __construct(){
 

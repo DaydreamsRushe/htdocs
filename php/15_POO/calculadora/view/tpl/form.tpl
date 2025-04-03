@@ -9,7 +9,7 @@
 </head>
 <body>
   <h1>Calculadora</h1>
-  <form method="POST" class="mt-3 mx-5" action="../controller/app.php">
+  <form method="POST" class="mt-3 mx-5" action="../controller/controller.php">
     <label for="numero1">Numero 1</label>
     <input
         type="text"
@@ -24,14 +24,14 @@
         name="numero2"
         value=""
       /><!-- pattern="^\d*(\.\d{0,2})?$" --><br />
-
+      <p>{{::mensajeerror::}}</p>
       <div>
         <input type="radio" name="op" value="suma">Suma</input>
         <input type="radio" name="op" value="resta">resta</input>
         <input type="radio" name="op" value="mult">multiplicacion</input>
         <input type="radio" name="op" value="div">Division</input>
       </div>
-      <input type="submit" class="mt-3 btn btn-primary" name="enviar" value="Registrar" />
+      <input type="submit" class="mt-3 btn btn-primary" name="registrar" value="registrar" />
   </form>
 </body>
 </html>

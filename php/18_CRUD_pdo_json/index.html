@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="views/css/hoja.css" />
+    <title>CRUD con Json y Pdo</title>
+  </head>
+  <body>
+    <h1>CRUD <span class="subtitulo">Create Read Update Delete</span></h1>
+    <table>
+      <tr>
+        <td class="primera_fila">Id</td>
+        <td class="primera_fila">Nombre</td>
+        <td class="primera_fila">Apellido</td>
+        <td class="primera_fila" colspan="2" class="sin">Acciones</td>
+      </tr>
+      <tbody id="tablaDatos">
+        <!-- Aqui se insertan los datos dinamicos -->
+      </tbody>
+      <tr>
+        <td></td>
+        <td>
+          <input type="text" id="nombre" name="nombre" class="centrado" />
+        </td>
+        <td>
+          <input type="text" id="apellido" name="apellido" class="centrado" />
+        </td>
+        <td class="bot"><button id="btnInsertar">Insertar</button></td>
+      </tr>
+    </table>
+
+    <script src="views/js/script.js"></script>
+  </body>
+</html>

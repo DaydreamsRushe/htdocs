@@ -1,0 +1,84 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+
+h1 {
+  color: #333;
+  text-align: center;
+}
+
+.subtitulo {
+  font-size: 0.5em;
+  color: #666;
+}
+
+table {
+  margin: 20px auto;
+  border-collapse: collapse;
+}
+
+td {
+  padding: 8px;
+  text-align: center;
+}
+
+.primera_fila {
+  background-color: #f0f0f0;
+  font-weight: bold;
+}
+
+.bot {
+  text-align: center;
+}
+
+button {
+  padding: 5px 10px;
+  margin: 0 5px;
+  cursor: pointer;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 3px;
+}
+.btn-borrar {
+  background-color: #f44336;
+}
+.btn-guardar {
+  background-color: #2196f3;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+.editable {
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.editable:hover {
+  background-color: #f5f5f5;
+}
+
+.edit-input {
+  width: 90%;
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  text-align: center;
+}
+
+.edit-input:focus {
+  outline: none;
+  border-color: #4caf50;
+  box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+}
+
+.centrado {
+  text-align: center;
+  width: 90%;
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+}

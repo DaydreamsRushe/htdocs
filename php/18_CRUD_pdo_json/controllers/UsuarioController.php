@@ -16,9 +16,7 @@ class UsuarioController{
   public function index(){
     $stmt = $this->usuario->read();
     $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    /* echo var_dump($usuarios); */
     return json_encode($usuarios);
-    
   }
 
   public function create($data){
@@ -35,8 +33,9 @@ class UsuarioController{
     $this->usuario->id = $data['id'];
     $this->usuario->nombres = $data['nombre'];
     $this->usuario->apellidos = $data['apellido'];
-
+    echo "<script>console.log('petty plz');</script>";
     if($this->usuario->update()){
+      
       return json_encode(['success' => true]);
     }
     return json_encode(['success' => false, 'message' => 'Error al actualizar el usuario']);

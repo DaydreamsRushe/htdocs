@@ -1,5 +1,4 @@
 <?php
-
 require_once 'controllers/UsuarioController.php';
 header('Content-Type: application/json');
 
@@ -23,6 +22,7 @@ switch($data['action']){
   case 'update':
     echo $controller->update($data);
     break;
+
   case 'delete':
     echo $controller->delete($data);
     break;

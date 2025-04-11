@@ -1,8 +1,37 @@
 const btnInsertar = document.querySelector("#btnInsertar");
+const btnBorrar = document.querySelector("#btnBorrar");
 const nombre = document.querySelector("#nombre");
 const apellido = document.querySelector("#apellido");
+const email = document.querySelector("#email");
+const password = document.querySelector("#password");
+const tipo_usuario = document.querySelector("#tipo_usuario");
 const tablaDatos = document.querySelector("#tablaDatos");
 let editadndoEnCurso = false; //Variable para la edicion en curso
+const content = document.querySelector(".content-wrapper");
+
+//mostrando mensajes de usuario
+const mostrarMensaje = (mensaje, esError = false) => {
+  //Crear el elemento de mensaje si no existe
+  let mensajeElement = document.querySelector(".mensaje-usuario");
+  if (!mensajeElement) {
+    mensajeElement = document.createElement("div");
+    mensajeElement.className = "mensaje-usuario";
+    content.insertBefore(
+      mensajeElement,
+      document.querySelector(".table-container")
+    );
+  }
+  //Configuro el mensaje
+  mensajeElement.textContent = mensaje;
+  mensajeElement.className = `mensaje-usuario ${esError ? "error" : "exito"}`;
+  //Oculto el mensaje despues de 5 segundos
+  setTimeout(() => {
+    mensajeElement.style.opacity = "0";
+    setTimeout(() => {
+      mensajeElement.remove();
+    }, 500);
+  }, 5000);
+};
 
 //Listener para cargar los datos al iniciar la pagina
 document.addEventListener("DOMContentLoaded", () => {
@@ -14,11 +43,20 @@ document.addEventListener("DOMContentLoaded", () => {
 const inicializarEventos = () => {
   //evento para el boton insertar
   btnInsertar.addEventListener("click", insertarDato);
-  nombre.addEventListener("keypress", (e) => {
-    if (e.key === "Enter") insertarDato();
-  });
-  apellido.addEventListener("keypress", (e) => {
-    if (e.key === "Enter") insertarDato();
+
+  //Eventos para todos los campos del formulario
+  const camposFormulario = [
+    { elemento: nombre, id: "nombre" },
+    { elemento: apellido, id: "apellido" },
+    { elemento: email, id: "email" },
+    { elemento: password, id: "password" },
+  ];
+  camposFormulario.forEach((campo) => {
+    campo.elemento.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        insertarDato();
+      }
+    });
   });
 };
 
@@ -40,17 +78,18 @@ const mostrarDatos = (datos) => {
     const fila = document.createElement("tr");
     fila.innerHTML = `
       <td>${dato.id}</td>
-      <td class="editable">${dato.Nombres}</td>
-      <td class="editable">${dato.Apellidos}</td>
-      <td><button class="btn-borrar">Borrar</button></td>
-      <td><button class="btn-guardar">Editar</button></td>
-      `;
+      <td class="editable">${dato.nombre}</td>
+      <td class="editable">${dato.apellido}</td>
+      <td class="editable">${dato.email}</td>
+      <td class="editable">${
+        dato.tipo_usuario === 1 ? "Editor" : "Registrado"
+      }</td>
+      <td>
+        <button class="btn-borrar">Borrar</button>
+        <button class="btn-guardar">Editar</button>
+      </td>
+    `;
 
-    //Agregamos eventos a los elementos de la fila
-    /* const celdasEditables = fila.querySelectorAll(".editable");
-    celdasEditables.forEach((celda) => {
-      celda.addEventListener("click", () => activarEdicion(celda));
-    }); */
     const btnBorrar = fila.querySelector(".btn-borrar");
     btnBorrar.addEventListener("click", () => borrarDato(dato.id));
 
@@ -109,12 +148,14 @@ const guardarCambios = async (id, boton) => {
   }
 
   const fila = boton.closest("tr"); //recorro el elemento y sus padres hasta encontrar el que concuerda con el selector
+  const celdas = fila.querySelectorAll("td");
   const nombre =
-    fila.querySelector("td:nth-child(2) input")?.value ||
-    fila.querySelector("td:nth-child(2)").textContent;
+    celdas[1].querySelector("input")?.value || celdas[1].textContent;
   const apellido =
-    fila.querySelector("td:nth-child(3) input")?.value ||
-    fila.querySelector("td:nth-child(3)").textContent;
+    celdas[2].querySelector("input")?.value || celdas[2].textContent;
+  const email =
+    celdas[3].querySelector("input")?.value || celdas[3].textContent;
+  /* const email = celdas[3].querySelector("input")?.value || celdas[3].textContent; */
 
   try {
     const response = await fetch("api.php", {
@@ -127,32 +168,36 @@ const guardarCambios = async (id, boton) => {
         id: id,
         nombre: nombre,
         apellido: apellido,
+        email: email,
       }),
     });
 
-    if (response.ok) {
-      //converimaos los inputs de nuevo a texto
-      nombre.value = "";
-      apellido.value = "";
-      cargarDatos();
+    const resultado = await response.json();
 
-      //Restauramos el boton a editar
+    //Verificamos tanto el codigo de estado HTTP como el contenido de la respuesta
+    if (response.status >= 400 || resultado.error) {
+      mostrarMensaje(resultado.error || "Error al actualizar el usuario", true);
+    } else {
+      //Convertimos los inputs de nuevo a texto
+      celdas[1].textContent = nombre;
+      celdas[2].textContent = apellido;
+      celdas[3].textContent = email;
+
+      //Restauramos el boton Editar
       boton.textContent = "Editar";
       boton.classList.remove("guardando");
       editadndoEnCurso = false;
+      mostrarMensaje(resultado.mensaje || "Usuario actualizado correctamente");
     }
   } catch (error) {
-    console.error("Errorum al actualizar el dato", error);
+    mostrarMensaje("Error al actualizar el usuario: " + error.message, true);
   }
 };
 
 //Funcion de insertar un nuevo Usuario
 const insertarDato = async () => {
-  const nom = nombre.value;
-  const ap = apellido.value;
-
-  if (!nom || !ap) {
-    alert("Por favor, complete todos los campos");
+  if (!nombre.value || !apellido.value || !email.value || !password.value) {
+    mostrarMensaje("Por favor, complete todos los campos", true);
     return;
   }
 
@@ -164,18 +209,30 @@ const insertarDato = async () => {
       },
       body: JSON.stringify({
         action: "create",
-        nombre: nom,
-        apellido: ap,
+        nombre: nombre.value,
+        apellido: apellido.value,
+        email: email.value,
+        password: password.value,
+        tipo_usuario: tipo_usuario.value,
       }),
     });
 
-    if (response.ok) {
+    const resultado = await response.json();
+    if (response.status >= 400 || resultado.error) {
+      mostrarMensaje(resultado.error || "Error al crear el usuario", true);
+    } else {
+      //Limpiar campos y actualizar tabla solo si hay error
       nombre.value = "";
       apellido.value = "";
+      email.value = "";
+      password.value = "";
+      tipo_usuario.value = "2";
       cargarDatos();
+
+      mostrarMensaje(resultado.mensaje || "Usuario creado correctamente");
     }
   } catch (error) {
-    console.error("Errorum al insetar el dato:", error);
+    mostrarMensaje("Error al crear el usuario: " + error.message, true);
   }
 };
 
@@ -194,11 +251,20 @@ const borrarDato = async (id) => {
         }),
       });
 
+      const resultado = await response.json();
+
       if (response.ok) {
         cargarDatos();
+        if (resultado.mensaje) {
+          mostrarMensaje(resultado.mensaje);
+        } else if (resultado.error) {
+          mostrarMensaje(resultado.error, true);
+        }
+      } else {
+        mostrarMensaje(resultado.error || "Error al eliminar el usuario", true);
       }
     } catch (error) {
-      console.error("ERRORUM al borrar el dato:", error);
+      mostrarMensaje("Error al eliminar el usuario " + error.message, true);
     }
   }
 };

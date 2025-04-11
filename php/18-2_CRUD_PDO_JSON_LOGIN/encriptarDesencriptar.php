@@ -20,7 +20,7 @@ do {
 echo "Coste apropiado encontrado: " . $coste . "<br>";
 echo "encriptado: " . $pw . "<br>";  */
 
-$pw = password_hash("oscareroles", PASSWORD_DEFAULT, ["cost" => 10]);
+$pw = password_hash("SantiagoPerolillos", PASSWORD_DEFAULT, ["cost" => 10]);
 echo "encriptado: " . $pw . "<br>";
 
 if (password_verify('rasmbbjjerdorf', $pw)) {

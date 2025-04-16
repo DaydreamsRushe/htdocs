@@ -1,13 +1,13 @@
 const btnInsertar = document.querySelector("#btnInsertar");
 const btnBorrar = document.querySelector("#btnBorrar");
-const nombre = document.querySelector("#nombre");
-const apellido = document.querySelector("#apellido");
+const nombre_apellidos = document.querySelector("#nombre_apellidos");
+const usuario = document.querySelector("#usuario");
 const email = document.querySelector("#email");
 const password = document.querySelector("#password");
 const tipo_usuario = document.querySelector("#tipo_usuario");
 const tablaDatos = document.querySelector("#tablaDatos");
 let editadndoEnCurso = false; //Variable para la edicion en curso
-const content = document.querySelector(".content-wrapper");
+const content = document.querySelector(".content-wrapper"); //prevenir muestra de mensajes
 
 //mostrando mensajes de usuario
 const mostrarMensaje = (mensaje, esError = false) => {
@@ -46,8 +46,8 @@ const inicializarEventos = () => {
 
   //Eventos para todos los campos del formulario
   const camposFormulario = [
-    { elemento: nombre, id: "nombre" },
-    { elemento: apellido, id: "apellido" },
+    { elemento: nombre_apellidos, id: "nombre_apellidos" },
+    { elemento: usuario, id: "usuario" },
     { elemento: email, id: "email" },
     { elemento: password, id: "password" },
   ];
@@ -78,8 +78,8 @@ const mostrarDatos = (datos) => {
     const fila = document.createElement("tr");
     fila.innerHTML = `
       <td>${dato.id}</td>
-      <td class="editable">${dato.nombre}</td>
-      <td class="editable">${dato.apellido}</td>
+      <td class="editable">${dato.nombre_apellidos}</td>
+      <td class="editable">${dato.usuario}</td>
       <td class="editable">${dato.email}</td>
       <td class="editable">${
         dato.tipo_usuario === 1 ? "Editor" : "Registrado"
@@ -108,7 +108,7 @@ const mostrarDatos = (datos) => {
 //Activamos la edicion de una fila
 const activarEdicion = (fila) => {
   if (editadndoEnCurso) {
-    alert("Por favor guarde los cambios antes de editar othro registro");
+    alert("Por favor guarde los cambios antes de editar otro registro");
     return;
   }
   editadndoEnCurso = true;
@@ -149,13 +149,14 @@ const guardarCambios = async (id, boton) => {
 
   const fila = boton.closest("tr"); //recorro el elemento y sus padres hasta encontrar el que concuerda con el selector
   const celdas = fila.querySelectorAll("td");
-  const nombre =
+  const nombre_apellidos =
     celdas[1].querySelector("input")?.value || celdas[1].textContent;
-  const apellido =
+  const usuario =
     celdas[2].querySelector("input")?.value || celdas[2].textContent;
   const email =
     celdas[3].querySelector("input")?.value || celdas[3].textContent;
-  /* const email = celdas[3].querySelector("input")?.value || celdas[3].textContent; */
+  const tipo_usuario =
+    celdas[4].querySelector("input")?.value || celdas[4].textContent;
 
   try {
     const response = await fetch("api.php", {
@@ -166,8 +167,8 @@ const guardarCambios = async (id, boton) => {
       body: JSON.stringify({
         action: "update",
         id: id,
-        nombre: nombre,
-        apellido: apellido,
+        nombre_apellidos: nombre_apellidos,
+        usuario: usuario,
         email: email,
       }),
     });
@@ -179,9 +180,10 @@ const guardarCambios = async (id, boton) => {
       mostrarMensaje(resultado.error || "Error al actualizar el usuario", true);
     } else {
       //Convertimos los inputs de nuevo a texto
-      celdas[1].textContent = nombre;
-      celdas[2].textContent = apellido;
+      celdas[1].textContent = nombre_apellidos;
+      celdas[2].textContent = usuario;
       celdas[3].textContent = email;
+      celdas[4].textContent = tipo_usuario;
 
       //Restauramos el boton Editar
       boton.textContent = "Editar";
@@ -196,7 +198,12 @@ const guardarCambios = async (id, boton) => {
 
 //Funcion de insertar un nuevo Usuario
 const insertarDato = async () => {
-  if (!nombre.value || !apellido.value || !email.value || !password.value) {
+  if (
+    !nombre_apellidos.value ||
+    !usuario.value ||
+    !email.value ||
+    !password.value
+  ) {
     mostrarMensaje("Por favor, complete todos los campos", true);
     return;
   }
@@ -209,8 +216,8 @@ const insertarDato = async () => {
       },
       body: JSON.stringify({
         action: "create",
-        nombre: nombre.value,
-        apellido: apellido.value,
+        nombre_apellidos: nombre_apellidos.value,
+        usuario: usuario.value,
         email: email.value,
         password: password.value,
         tipo_usuario: tipo_usuario.value,
@@ -222,8 +229,8 @@ const insertarDato = async () => {
       mostrarMensaje(resultado.error || "Error al crear el usuario", true);
     } else {
       //Limpiar campos y actualizar tabla solo si hay error
-      nombre.value = "";
-      apellido.value = "";
+      nombre_apellidos.value = "";
+      usuario.value = "";
       email.value = "";
       password.value = "";
       tipo_usuario.value = "2";

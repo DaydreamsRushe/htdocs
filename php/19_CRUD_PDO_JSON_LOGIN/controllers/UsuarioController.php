@@ -20,7 +20,7 @@ class UsuarioController{
   }
 
   public function create($data){
-    if(empty($data['nombre']) || empty($data['apellido']) || empty($data['email']) || empty($data['password'])){
+    if(empty($data['nombre_apellidos']) || empty($data['usuario']) || empty($data['email']) || empty($data['password'])){
       return ['error' => 'Todos los campos son requeridos'];
     }
 
@@ -30,10 +30,10 @@ class UsuarioController{
     }
 
     //Asignar valores
-    $this->usuario->nombres = $data['nombre'];
-    $this->usuario->apellidos = $data['apellido'];
+    $this->usuario->nombre_apellidos = $data['nombre_apellidos'];
+    $this->usuario->usuario = $data['usuario'];
     $this->usuario->email = $data['email'];
-    $this->usuario->password = pasword_hash($data['password'], PASSWORD_DEFAULT, ["cost" => 14]);
+    $this->usuario->password = password_hash($data['password'], PASSWORD_DEFAULT, ["cost" => 14]);
     $this->usuario->tipo_usuario = $data['tipo_usuario'] ?? 2;
     
     if ($this->usuario->create()){
@@ -52,8 +52,8 @@ class UsuarioController{
     }
 
     $this->usuario->id = $data['id'];
-    $this->usuario->nombres = $data['nombre'];
-    $this->usuario->apellidos = $data['apellido'];
+    $this->usuario->nombre_apellidos = $data['nombre_apellidos'];
+    $this->usuario->usuario = $data['usuario'];
     $this->usuario->email = $data['email'];
     if(!empty($data['password'])){
       $this->usuario->password = password_hash($data['password'], PASSWORD_DEFAULT, ['cost' => 14]);

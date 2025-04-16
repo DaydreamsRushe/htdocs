@@ -30,7 +30,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
   //Procesamos segun la accion
   switch($data['action']){
     case 'create':
-      if(!isset($data['nombre']) || !isset($data['apellido']) || !isset($data['email']) || !isset($data['password'])){
+      if(!isset($data['nombre_apellidos']) || !isset($data['usuario']) || !isset($data['email']) || !isset($data['password'])){
         echo json_encode(['error' => 'Faltan campos requeridos']);
         exit;
       }

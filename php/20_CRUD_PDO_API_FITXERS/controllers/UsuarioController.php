@@ -33,8 +33,9 @@ class UsuarioController{
     $this->usuario->nombre_apellidos = $data['nombre_apellidos'];
     $this->usuario->usuario = $data['usuario'];
     $this->usuario->email = $data['email'];
-    $this->usuario->password = password_hash($data['password'], PASSWORD_DEFAULT, ["cost" => 14]);
+    $this->usuario->password = password_hash($data['password'], PASSWORD_DEFAULT);
     $this->usuario->tipo_usuario = $data['tipo_usuario'] ?? 2;
+    $this->usuario->foto = $data['foto'] ?? null;
     
     if ($this->usuario->create()){
       return ['mensaje' => 'Usuario creado correctamente'];
@@ -55,8 +56,9 @@ class UsuarioController{
     $this->usuario->nombre_apellidos = $data['nombre_apellidos'];
     $this->usuario->usuario = $data['usuario'];
     $this->usuario->email = $data['email'];
+
     if(!empty($data['password'])){
-      $this->usuario->password = password_hash($data['password'], PASSWORD_DEFAULT, ['cost' => 14]);
+      $this->usuario->password = password_hash($data['password'], PASSWORD_DEFAULT);
     }
 
     if(isset($data['tipo_usuario'])){
@@ -75,6 +77,16 @@ class UsuarioController{
       return ['mensaje' => 'Usuario eliminado correctamente'];
     }
     return ['error' => 'No se pudo eliminar el usuario'];
+  }
+
+  public function updateFoto($id, $fotoPath){
+    $this->usuario->id = $id;
+    $this->usuario->foto = $fotoPath;
+
+    if($this->usuario->updateFoto()){
+      return ['mensaje' => 'Foto actualizada correctamente'];
+    }
+    return['error' => 'No se pudo actualizar la foto'];
   }
 }
 ?>

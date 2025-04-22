@@ -71,6 +71,18 @@ select {
   transition: border-color 0.3s;
 }
 
+input[type="file"] {
+  padding: 8px;
+  border: 2px dashed #ddd;
+  background-color: #f8f9fa;
+  cursor: pointer;
+}
+
+input[type="file"]:hover {
+  border-color: #3498db;
+  background-color: #f1f7fb;
+}
+
 input:focus,
 select:focus {
   border-color: #3498db;
@@ -132,11 +144,77 @@ tr:hover {
   background-color: #f5f5f5;
 }
 
+/* Estilos para las fotos de usuario */
+.user-photo-container {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  margin: 0 auto;
+  display: inline-block;
+}
+
+.user-photo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #3498db;
+  background-color: #f8f9fa;
+  display: block;
+}
+
+.user-photo[src*="default-user.svg"] {
+  padding: 8px;
+  background-color: #e9ecef;
+}
+
+.btn-foto {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border-radius: 50%;
+  background-color: rgba(155, 89, 182, 0.8);
+  color: white;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 2px solid white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  min-width: auto;
+  margin: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 10;
+}
+
+.user-photo-container:hover .btn-foto {
+  opacity: 1;
+}
+
+.btn-foto:hover {
+  background-color: rgba(142, 68, 173, 0.9);
+}
+
 .btn-borrar,
 .btn-guardar {
   padding: 8px 12px;
   margin: 0 5px;
   font-size: 0.9rem;
+  display: inline-block;
+  min-width: 80px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+td:last-child {
+  white-space: nowrap;
+  text-align: center;
 }
 
 .btn-borrar {
@@ -169,6 +247,30 @@ tr:hover {
   th,
   td {
     padding: 8px 10px;
+  }
+
+  .user-photo-container {
+    width: 40px;
+    height: 40px;
+  }
+
+  .user-photo {
+    width: 40px;
+    height: 40px;
+  }
+
+  .btn-foto {
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+  }
+
+  .btn-borrar,
+  .btn-guardar {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+    min-width: 70px;
+    margin: 0 2px;
   }
 }
 

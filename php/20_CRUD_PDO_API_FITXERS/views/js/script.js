@@ -5,6 +5,7 @@ const usuario = document.querySelector("#usuario");
 const email = document.querySelector("#email");
 const password = document.querySelector("#password");
 const tipo_usuario = document.querySelector("#tipo_usuario");
+const foto = document.querySelector("#foto");
 const tablaDatos = document.querySelector("#tablaDatos");
 let editadndoEnCurso = false; //Variable para la edicion en curso
 const content = document.querySelector(".content-wrapper"); //prevenir muestra de mensajes
@@ -58,6 +59,15 @@ const inicializarEventos = () => {
       }
     });
   });
+
+  btnBorrar.addEventListener("click", () => {
+    nombre_apellidos.value = "";
+    usuario.value = "";
+    email.value = "";
+    password.value = "";
+    tipo_usuario.value = "";
+    foto.value = "";
+  });
 };
 
 //traemos los datos desde el servidor
@@ -78,6 +88,18 @@ const mostrarDatos = (datos) => {
     const fila = document.createElement("tr");
     fila.innerHTML = `
       <td>${dato.id}</td>
+      <td>
+        <div class="user-photo-container">
+          <img src="${
+            dato.foto || "views/img/default-user.svg"
+          }" alt="Foto de ${
+      dato.nombre_apellidos
+    }" class="user-photo" onerror="this.src='views/img/default-user.svg'">
+          <button class="btn-foto" data-id="${
+            dato.id
+          }" title="Cambiar foto">&#128247;</button>
+        </div>
+      </td>
       <td class="editable">${dato.nombre_apellidos}</td>
       <td class="editable">${dato.usuario}</td>
       <td class="editable">${dato.email}</td>
@@ -101,8 +123,58 @@ const mostrarDatos = (datos) => {
         activarEdicion(fila);
       }
     });
+    const btnFoto = fila.querySelector(".btn-foto");
+    btnFoto.addEventListener("click", () => cambiarFoto(dato.id));
+
     tablaDatos.appendChild(fila);
   });
+};
+
+const cambiarFoto = (id) => {
+  const input = document.createElement("input");
+  input.type = "file";
+  input.accept = "image/*";
+
+  input.onchange = async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      if (file.size > 2 * 1024 * 1024) {
+        mostrarMensaje("El archivo es demasiado grande. Maximo 2MB", true);
+        return;
+      }
+
+      const tiposPermitidos = ["image/jpeg", "image/png", "image/gif"];
+      if (!tiposPermitidos.includes(file.type)) {
+        mostrarMensaje(
+          "Tipo de archivo no permitido. Use JPEG, PNG o GIF",
+          true
+        );
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("foto", file);
+      formData.append("id", id);
+      formData.append("action", "update_foto");
+
+      try {
+        const response = await fetch("api.php", {
+          method: "POST",
+          body: formData,
+        });
+        const resultado = await response.json();
+        if (resultado.error) {
+          mostrarMensaje(resultado.error, true);
+        } else {
+          mostrarMensaje("Foto actualizada correctamente");
+          cargarDatos();
+        }
+      } catch (error) {
+        mostrarMensaje("Error al actualizar la foto: " + error.message, true);
+      }
+    }
+  };
+  input.click();
 };
 
 //Activamos la edicion de una fila
@@ -150,13 +222,11 @@ const guardarCambios = async (id, boton) => {
   const fila = boton.closest("tr"); //recorro el elemento y sus padres hasta encontrar el que concuerda con el selector
   const celdas = fila.querySelectorAll("td");
   const nombre_apellidos =
-    celdas[1].querySelector("input")?.value || celdas[1].textContent;
+    celdas[2].querySelector("input")?.value || celdas[1].textContent;
   const usuario =
-    celdas[2].querySelector("input")?.value || celdas[2].textContent;
+    celdas[3].querySelector("input")?.value || celdas[2].textContent;
   const email =
-    celdas[3].querySelector("input")?.value || celdas[3].textContent;
-  const tipo_usuario =
-    celdas[4].querySelector("input")?.value || celdas[4].textContent;
+    celdas[4].querySelector("input")?.value || celdas[3].textContent;
 
   try {
     const response = await fetch("api.php", {
@@ -208,22 +278,23 @@ const insertarDato = async () => {
     return;
   }
 
+  const formData = new FormData();
+  formData.append("action", "create");
+  formData.append("nombre_apellidos", nombre_apellidos.value);
+  formData.append("usuario", usuario.value);
+  formData.append("email", email.value);
+  formData.append("password", password.value);
+  formData.append("tipo_usuario", tipo_usuario.value);
+
+  if (foto.files[0]) {
+    formData.append("foto", foto.files[0]);
+  }
+  console.log(formData);
   try {
     const response = await fetch("api.php", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        action: "create",
-        nombre_apellidos: nombre_apellidos.value,
-        usuario: usuario.value,
-        email: email.value,
-        password: password.value,
-        tipo_usuario: tipo_usuario.value,
-      }),
+      body: formData,
     });
-
     const resultado = await response.json();
     if (response.status >= 400 || resultado.error) {
       mostrarMensaje(resultado.error || "Error al crear el usuario", true);
@@ -234,8 +305,8 @@ const insertarDato = async () => {
       email.value = "";
       password.value = "";
       tipo_usuario.value = "2";
+      foto.value = "";
       cargarDatos();
-
       mostrarMensaje(resultado.mensaje || "Usuario creado correctamente");
     }
   } catch (error) {

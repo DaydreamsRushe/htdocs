@@ -1,18 +1,19 @@
 const btnInsertar = document.querySelector("#btnInsertar");
 const btnBorrar = document.querySelector("#btnBorrar");
-const nombre_apellidos = document.querySelector("#nombre_apellidos");
+const nombre = document.querySelector("#nombre");
 const usuario = document.querySelector("#usuario");
 const email = document.querySelector("#email");
 const password = document.querySelector("#password");
 const tipo_usuario = document.querySelector("#tipo_usuario");
+//capturar input foto
 const foto = document.querySelector("#foto");
 const tablaDatos = document.querySelector("#tablaDatos");
-let editadndoEnCurso = false; //Variable para la edicion en curso
+let editandoEnCurso = false;
 const content = document.querySelector(".content-wrapper"); //prevenir muestra de mensajes
 
-//mostrando mensajes de usuario
+// mostrando mensajes al usuario
 const mostrarMensaje = (mensaje, esError = false) => {
-  //Crear el elemento de mensaje si no existe
+  // Crear el elemento de mensaje si no existe
   let mensajeElement = document.querySelector(".mensaje-usuario");
   if (!mensajeElement) {
     mensajeElement = document.createElement("div");
@@ -22,10 +23,10 @@ const mostrarMensaje = (mensaje, esError = false) => {
       document.querySelector(".table-container")
     );
   }
-  //Configuro el mensaje
+  // Configuro el mensaje
   mensajeElement.textContent = mensaje;
   mensajeElement.className = `mensaje-usuario ${esError ? "error" : "exito"}`;
-  //Oculto el mensaje despues de 5 segundos
+  // Oculto el mensaje después de 5 segundos
   setTimeout(() => {
     mensajeElement.style.opacity = "0";
     setTimeout(() => {
@@ -34,24 +35,25 @@ const mostrarMensaje = (mensaje, esError = false) => {
   }, 5000);
 };
 
-//Listener para cargar los datos al iniciar la pagina
+// Listener para cargar los datos al iniciar la página
 document.addEventListener("DOMContentLoaded", () => {
   cargarDatos();
   inicializarEventos();
 });
 
-//Inicializaremos todos los eventos
+// Inicializamos todos los eventos
 const inicializarEventos = () => {
-  //evento para el boton insertar
+  // Evento para el botón de insertar
   btnInsertar.addEventListener("click", insertarDato);
 
-  //Eventos para todos los campos del formulario
+  // Eventos para todos los campos del formulario
   const camposFormulario = [
-    { elemento: nombre_apellidos, id: "nombre_apellidos" },
+    { elemento: nombre, id: "nombre" },
     { elemento: usuario, id: "usuario" },
     { elemento: email, id: "email" },
     { elemento: password, id: "password" },
   ];
+
   camposFormulario.forEach((campo) => {
     campo.elemento.addEventListener("keypress", (e) => {
       if (e.key === "Enter") {
@@ -61,56 +63,53 @@ const inicializarEventos = () => {
   });
 
   btnBorrar.addEventListener("click", () => {
-    nombre_apellidos.value = "";
+    nombre.value = "";
     usuario.value = "";
     email.value = "";
     password.value = "";
-    tipo_usuario.value = "";
+    tipo_usuario.value = "2";
     foto.value = "";
   });
 };
 
-//traemos los datos desde el servidor
+// Traemos los datos desde el servidor
 const cargarDatos = async () => {
   try {
     const response = await fetch("api.php");
     const datos = await response.json();
     mostrarDatos(datos);
   } catch (error) {
-    console.log("Errorum al cargar los datos:");
+    mostrarMensaje("Error al cargar los datos: " + error.message, true);
   }
 };
 
-//Mostrar datos en la tabla
+// Mostrar los datos en la tabla
 const mostrarDatos = (datos) => {
   tablaDatos.innerHTML = "";
   datos.forEach((dato) => {
     const fila = document.createElement("tr");
     fila.innerHTML = `
-      <td>${dato.id}</td>
-      <td>
-        <div class="user-photo-container">
-          <img src="${
-            dato.foto || "views/img/default-user.svg"
-          }" alt="Foto de ${
-      dato.nombre_apellidos
-    }" class="user-photo" onerror="this.src='views/img/default-user.svg'">
-          <button class="btn-foto" data-id="${
-            dato.id
-          }" title="Cambiar foto">&#128247;</button>
-        </div>
-      </td>
-      <td class="editable">${dato.nombre_apellidos}</td>
-      <td class="editable">${dato.usuario}</td>
-      <td class="editable">${dato.email}</td>
-      <td class="editable">${
-        dato.tipo_usuario === 1 ? "Editor" : "Registrado"
-      }</td>
-      <td>
-        <button class="btn-borrar">Borrar</button>
-        <button class="btn-guardar">Editar</button>
-      </td>
-    `;
+            <td>${dato.id}</td>
+            <td>
+              <div class="user-photo-container">
+                <img src="${dato.foto || "views/img/default-user.svg"}" 
+                     alt="Foto de ${dato.nombre_apellidos}" 
+                     class="user-photo"
+                     onerror="this.src='views/img/default-user.svg'">
+                <button class="btn-foto" data-id="${
+                  dato.id
+                }" title="Cambiar foto">&#128247;</button>
+              </div>
+            </td>
+            <td class="editable">${dato.nombre_apellidos}</td>
+            <td class="editable">${dato.usuario}</td>
+            <td class="editable">${dato.email}</td>
+            <td>${dato.tipo_usuario === 1 ? "Editor" : "Registrado"}</td>
+            <td>
+              <button class="btn-borrar">Borrar</button>
+              <button class="btn-guardar">Editar</button>
+            </td>
+        `;
 
     const btnBorrar = fila.querySelector(".btn-borrar");
     btnBorrar.addEventListener("click", () => borrarDato(dato.id));
@@ -123,6 +122,7 @@ const mostrarDatos = (datos) => {
         activarEdicion(fila);
       }
     });
+    //Capturar la edición de la foto del usuario llamando a su función
     const btnFoto = fila.querySelector(".btn-foto");
     btnFoto.addEventListener("click", () => cambiarFoto(dato.id));
 
@@ -130,19 +130,23 @@ const mostrarDatos = (datos) => {
   });
 };
 
+// Función para cambiar la foto de un usuario
 const cambiarFoto = (id) => {
   const input = document.createElement("input");
   input.type = "file";
   input.accept = "image/*";
 
   input.onchange = async (e) => {
+    //el input es de tipo file, al cambiar seleccionamos el primer elemento
     const file = e.target.files[0];
     if (file) {
+      // Validamos tamaño del archivo (máximo 2MB)
       if (file.size > 2 * 1024 * 1024) {
-        mostrarMensaje("El archivo es demasiado grande. Maximo 2MB", true);
+        mostrarMensaje("El archivo es demasiado grande. Máximo 2MB", true);
         return;
       }
 
+      // Validar tipo de archivo
       const tiposPermitidos = ["image/jpeg", "image/png", "image/gif"];
       if (!tiposPermitidos.includes(file.type)) {
         mostrarMensaje(
@@ -151,12 +155,10 @@ const cambiarFoto = (id) => {
         );
         return;
       }
-
       const formData = new FormData();
       formData.append("foto", file);
       formData.append("id", id);
       formData.append("action", "update_foto");
-
       try {
         const response = await fetch("api.php", {
           method: "POST",
@@ -177,58 +179,60 @@ const cambiarFoto = (id) => {
   input.click();
 };
 
-//Activamos la edicion de una fila
+// Activamos la edición de una fila
 const activarEdicion = (fila) => {
-  if (editadndoEnCurso) {
-    alert("Por favor guarde los cambios antes de editar otro registro");
+  if (editandoEnCurso) {
+    alert(
+      "Por favor, guarde los cambios actuales antes de editar otro registro"
+    );
     return;
   }
-  editadndoEnCurso = true;
 
-  //convertimos lis campos editables en inputs
+  editandoEnCurso = true;
   const celdasEditables = fila.querySelectorAll(".editable");
+
   celdasEditables.forEach((celda) => {
     const valorActual = celda.textContent;
     celda.innerHTML = `<input type="text" value="${valorActual}" class="edit-input">`;
   });
 
-  //Cambiamos el boton a Guardar
+  // Cambiamos el botón a Guardar
   const btnGuardar = fila.querySelector(".btn-guardar");
   btnGuardar.textContent = "Guardar";
   btnGuardar.classList.add("guardando");
 
-  //agregamos evento ENTER a todos los inputs de la fila
+  // Agregamos evento Enter a todos los inputs de la fila
   const inputs = fila.querySelectorAll(".edit-input");
   inputs.forEach((input) => {
     input.addEventListener("keypress", (e) => {
-      if (e.key == "Enter") {
-        e.preventDefault(); //prevenimos el comportamiento por defecto
+      if (e.key === "Enter") {
+        e.preventDefault(); // Prevenimos el comportamiento por defecto
         btnGuardar.click();
       }
     });
   });
 
-  //enfocamos el primer input
+  // Enfocamos el primer input
   const primerInput = fila.querySelector(".edit-input");
   if (primerInput) {
     primerInput.focus();
   }
 };
 
-//Guardamos los cambios
+// Guardamos los cambios
 const guardarCambios = async (id, boton) => {
   if (!boton.classList.contains("guardando")) {
     return;
   }
 
-  const fila = boton.closest("tr"); //recorro el elemento y sus padres hasta encontrar el que concuerda con el selector
+  const fila = boton.closest("tr");
   const celdas = fila.querySelectorAll("td");
   const nombre_apellidos =
-    celdas[2].querySelector("input")?.value || celdas[1].textContent;
+    celdas[2].querySelector("input")?.value || celdas[2].textContent;
   const usuario =
-    celdas[3].querySelector("input")?.value || celdas[2].textContent;
+    celdas[3].querySelector("input")?.value || celdas[3].textContent;
   const email =
-    celdas[4].querySelector("input")?.value || celdas[3].textContent;
+    celdas[4].querySelector("input")?.value || celdas[4].textContent;
 
   try {
     const response = await fetch("api.php", {
@@ -247,19 +251,22 @@ const guardarCambios = async (id, boton) => {
 
     const resultado = await response.json();
 
-    //Verificamos tanto el codigo de estado HTTP como el contenido de la respuesta
+    // Verificamos tanto el código de estado HTTP como el contenido de la respuesta
     if (response.status >= 400 || resultado.error) {
+      // Mostrar mensaje de error
       mostrarMensaje(resultado.error || "Error al actualizar el usuario", true);
     } else {
-      //Convertimos los inputs de nuevo a texto
+      // Convertimos los inputs de nuevo a texto
       celdas[2].textContent = nombre_apellidos;
       celdas[3].textContent = usuario;
       celdas[4].textContent = email;
 
-      //Restauramos el boton Editar
+      // Restauramos el botón a Editar
       boton.textContent = "Editar";
       boton.classList.remove("guardando");
-      editadndoEnCurso = false;
+      editandoEnCurso = false;
+
+      // Mostrar mensaje de éxito
       mostrarMensaje(resultado.mensaje || "Usuario actualizado correctamente");
     }
   } catch (error) {
@@ -267,47 +274,44 @@ const guardarCambios = async (id, boton) => {
   }
 };
 
-//Funcion de insertar un nuevo Usuario
+// Función para insertar un nuevo dato
 const insertarDato = async () => {
-  if (
-    !nombre_apellidos.value ||
-    !usuario.value ||
-    !email.value ||
-    !password.value
-  ) {
+  if (!nombre.value || !usuario.value || !email.value || !password.value) {
     mostrarMensaje("Por favor, complete todos los campos", true);
     return;
   }
-
   const formData = new FormData();
   formData.append("action", "create");
-  formData.append("nombre_apellidos", nombre_apellidos.value);
+  formData.append("nombre", nombre.value);
   formData.append("usuario", usuario.value);
   formData.append("email", email.value);
   formData.append("password", password.value);
   formData.append("tipo_usuario", tipo_usuario.value);
-
   if (foto.files[0]) {
     formData.append("foto", foto.files[0]);
   }
-  console.log(formData);
+
   try {
     const response = await fetch("api.php", {
       method: "POST",
       body: formData,
     });
     const resultado = await response.json();
+    // Verificamos tanto el código de estado HTTP como el contenido de la respuesta
     if (response.status >= 400 || resultado.error) {
+      // Mostrar mensaje de error
       mostrarMensaje(resultado.error || "Error al crear el usuario", true);
     } else {
-      //Limpiar campos y actualizar tabla solo si hay error
-      nombre_apellidos.value = "";
+      // Limpiar campos y actualizar tabla solo si no hay error
+      nombre.value = "";
       usuario.value = "";
       email.value = "";
       password.value = "";
       tipo_usuario.value = "2";
       foto.value = "";
       cargarDatos();
+
+      // Mostrar mensaje de éxito
       mostrarMensaje(resultado.mensaje || "Usuario creado correctamente");
     }
   } catch (error) {
@@ -315,9 +319,9 @@ const insertarDato = async () => {
   }
 };
 
-//funacion para borrar un dato
+// Función para borrar un dato
 const borrarDato = async (id) => {
-  if (confirm("¿Esta seguro de que desea borrar este registro?")) {
+  if (confirm("¿Está seguro de que desea borrar este registro?")) {
     try {
       const response = await fetch("api.php", {
         method: "POST",
@@ -334,16 +338,19 @@ const borrarDato = async (id) => {
 
       if (response.ok) {
         cargarDatos();
+
+        // Mostrar mensaje de éxito o error según la respuesta
         if (resultado.mensaje) {
           mostrarMensaje(resultado.mensaje);
         } else if (resultado.error) {
           mostrarMensaje(resultado.error, true);
         }
       } else {
+        // Mostrar mensaje de error
         mostrarMensaje(resultado.error || "Error al eliminar el usuario", true);
       }
     } catch (error) {
-      mostrarMensaje("Error al eliminar el usuario " + error.message, true);
+      mostrarMensaje("Error al eliminar el usuario: " + error.message, true);
     }
   }
 };

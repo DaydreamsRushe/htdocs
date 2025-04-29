@@ -56,7 +56,7 @@ class UsuarioController{
     $this->usuario->nombre_apellidos = $data['nombre_apellidos'];
     $this->usuario->usuario = $data['usuario'];
     $this->usuario->email = $data['email'];
-
+    
     if(!empty($data['password'])){
       $this->usuario->password = password_hash($data['password'], PASSWORD_DEFAULT);
     }

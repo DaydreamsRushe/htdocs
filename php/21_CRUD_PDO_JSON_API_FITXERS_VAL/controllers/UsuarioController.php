@@ -13,7 +13,9 @@ class UsuarioController {
     }
 
     public function index() {
-        $stmt = $this->usuario->read();
+      $query = "SELECT * FROM datos_usuarios WHERE tipo_usuario != 3";
+      $stmt=$this->db->prepare($query);
+      $stmt->execute();
         $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return json_encode($usuarios);
     }
@@ -89,6 +91,25 @@ class UsuarioController {
             return ["mensaje" => "Foto actualizada correctamente"];
         }
         return ["error" => "No se pudo actualizar la foto"];
+    }
+    public function login($email, $password){
+      $query = "SELECT * FROM datos_usuarios WHERE email = :email AND tipo_usuario = 3 LIMIT 1";
+      $stmt = $this->db->prepare($query);
+      $stmt->bindParam(":email", $email);
+      $stmt->execute();
+
+      if($stmt->rowCount() > 0){
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        if(password_verify($password, $user["password"])){
+          if(session_status() === PHP_SESSION_NONE){
+            session_start();
+          }
+          $_SESSION['adminLoggedIn'] = true;
+          $_SESSION['adminEmail'] = $email;
+          return ['success' => true];
+        }
+      }
+      return ['success' => false, 'error' => 'Credenciales incorrectas'];
     }
 }
 ?> 

@@ -173,13 +173,6 @@ class UsuarioController {
 
     public function login($email, $password) {
 
-      if(!filter_var($data['email'], FILTER_VALIDATE_EMAIL)){
-          return ["succes"=> false, 'error' => 'El fomrato del email no es válido'];
-        }
-      if(!$this->validarPassword($data['password'])){
-          return ['succes' => false, 'error' => 'La contraseña debe tener entre 6 y 10 caracteres, incluyendo al menos una mayuscula una minuscula, un numero y uno de estos caracteres !@#*'];
-         }
-
         $query = "SELECT * FROM datos_usuarios WHERE email = :email AND tipo_usuario = 3 LIMIT 1";
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(':email', $email);

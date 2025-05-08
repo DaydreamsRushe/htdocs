@@ -307,25 +307,6 @@ const guardarCambios = async (id, boton) => {
       mostrarMensaje("Usuario actualizado correctamente");
       editandoEnCurso = false;
       await cargarDatos(); //recargamos los datos despues de actualizar
-
-      /*  // Convertimos los inputs de nuevo a texto
-       celdas[2].textContent = nombre_apellidos;
-       celdas[3].textContent = usuario;
-       celdas[4].textContent = email;
- 
-       //Actualizaremos el tipo de usuario
-       const celdaTipoUsuario = fila.querySelector(".tipo-usuario");
-       celdaTipoUsuario.textContent =
-         tipo_usuario === "1" ? "Editor" : "Registrado";
-       celdaTipoUsuario.setAttribute("data-tipo", tipo_usuario);
- 
-       // Restauramos el botón a Editar
-       boton.textContent = "Editar";
-       boton.classList.remove("guardando");
-       editandoEnCurso = false;
- 
-       // Mostrar mensaje de éxito
-       mostrarMensaje(resultado.mensaje || "Usuario actualizado correctamente"); */
     }
   } catch (error) {
     mostrarMensaje("Error al actualizar: " + error.message, true);

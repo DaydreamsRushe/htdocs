@@ -1,5 +1,6 @@
 <?php
-header("Content-Type: application/json; charset=UTF-8")
+
+header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
@@ -7,8 +8,8 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 require_once 'models/Connection.php';
 require_once 'controllers/UsuarioController.php';
 
-if(session_status()=== PHP_SESSION_NONE){
-  session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
 }
 
 $controller = new UsuarioController();
@@ -25,8 +26,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_FILES['foto'])) {
         $action = $_POST['action'] ?? '';       
         if ($action === 'update_foto') {//evento
-          if(!isset($_SESSION["adminLoggedIn"])||$_SESSION["adminLoggedIn"]!==true){
-            echo json_decode(["error"=>"No autorizado"]);
+          if (!isset($_SESSION['adminLoggedIn']) || $_SESSION['adminLoggedIn'] !== true) {
+            echo json_encode(['error' => 'No autorizado']);
             exit;
           }
             $id = $_POST['id'] ?? '';
@@ -62,10 +63,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             exit;
         } else if ($action === 'create') {
-           if(!isset($_SESSION["adminLoggedIn"])||$_SESSION["adminLoggedIn"]!==true){
-            echo json_decode(["error"=>"No autorizado"]);
+
+           if (!isset($_SESSION['adminLoggedIn']) || $_SESSION['adminLoggedIn'] !== true) {
+            echo json_encode(['error' => 'No autorizado']);
             exit;
           }
+
             // Procesamos la creación de usuario con foto
             if (!isset($_POST['nombre']) || !isset($_POST['usuario']) || !isset($_POST['email']) || !isset($_POST['password'])) {
                 echo json_encode(['error' => 'Faltan campos requeridos']);
@@ -117,11 +120,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
     } else if (isset($_POST['action']) && $_POST['action'] === 'create') {
-       if(!isset($_SESSION["adminLoggedIn"])||$_SESSION["adminLoggedIn"]!==true){
-            echo json_encode(["error"=>"No autorizado"]);
+        // Procesamos la creación de usuario sin foto
+
+         if (!isset($_SESSION['adminLoggedIn']) || $_SESSION['adminLoggedIn'] !== true) {
+            echo json_encode(['error' => 'No autorizado']);
             exit;
           }
-        // Procesamos la creación de usuario sin foto
         if (!isset($_POST['nombre']) || !isset($_POST['usuario']) || !isset($_POST['email']) || !isset($_POST['password'])) {
             echo json_encode(['error' => 'Faltan campos requeridos']);
             exit;
@@ -148,13 +152,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Para otras acciones, obtenemos el contenido del body
-    /* $data = json_decode(file_get_contents("php://input"), true); */
     $rawData = file_get_contents("php://input");
     $data = json_decode($rawData, true);
 
-    //si hay error al decodificar JSON intentamos obtener los datos de $_POST
-    if(json_last_error()!== JSON_ERROR_NONE){
-      $data=$_POST;
+    if (json_last_error() !== JSON_ERROR_NONE) {
+      $data = $_POST;
     }
 
     // Verificamos que la acción esté definida
@@ -164,31 +166,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }   
     // Procesamos según la acción
     switch ($data['action']) {
-        
-        case 'check_session':
-            echo json_encode(['authenticated' => isset($_SESSION['adminLoggedIn']) && $_SESSION['adminLoggedIn'] === true]);
-            exit;
-
-        case 'login':
-            if(!isset($data['email']) || !isset($data['password'])){
-                http_response_code(400);
-                echo json_encode(["success"=> false, "error" => "email y contraseña requeridos"]);
+      case 'login':
+        // Validamos que el ID esté presente
+            if (!isset($data['email']) || !isset($data['password'])) {
+              http_response_code(400);
+                echo json_encode(['succes' => false, 'error' => 'Email y contraSEÑA REQUERIDOS']);
                 exit;
-              }
-          $result = $controller->login($data['email'], $data['password']);
-          if(is_string($result)){
-            $result = json_decode($result, true);
-          }
-          if(!isset($result['success'])){
-            $result['success'] = false;
-          }
-          echo json_encode($result);
-          exit;
-          break;
+            }
+                       
+            $result = $controller->login($data['email'], $data['password']);
+            if (is_string($result)) {
+              $result = json_decode($result, true);
+            }
+            if (!isset($result['success'])) {
+              $result['success'] =false;
+            }
+            echo json_encode($result);
+            exit;
+            break;
+        
+
         case 'update':
-          //verificar si el usuario esta logueado como admin
-          if(!isset($_SESSION['adminLoggedIn'])|| $_SESSION['adminLoggedIn']!=="true"){
-            echo json_encode(['error'=>`no autorizado`]);
+
+          if (!isset($_SESSION['adminLoggedIn']) || $_SESSION['adminLoggedIn'] !== true) {
+            echo json_encode(['error' => 'No autorizado']);
             exit;
           }
             // Validamos que el ID esté presente
@@ -215,7 +216,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             break;
             
         case 'delete':
-          
+
+          if (!isset($_SESSION['adminLoggedIn']) || $_SESSION['adminLoggedIn'] !== true) {
+            echo json_encode(['error' => 'No autorizado']);
+            exit;
+          }
             // Validamos que el ID exista
             if (!isset($data['id'])) {
                 echo json_encode(['error' => 'ID no especificado']);

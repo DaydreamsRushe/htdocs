@@ -45,13 +45,7 @@ const inicializarEventos = () => {
   // Evento para el formulario
   document.querySelector("#formUsuario").addEventListener("submit", (e) => {
     e.preventDefault();
-    /*   if (validarFomularioLogin()) {
-      const errores = Object.values(window.erroresValidacion);
-      errores.forEach((error) => {
-        error.style.color = "black";
-      }); */
     insertarDato();
-    /*  } */
   });
 
   // Eventos para todos los campos del formulario
@@ -71,7 +65,7 @@ const inicializarEventos = () => {
     });
   });
 
-  /*   btnBorrar.addEventListener("click", restablecerFormulario); */
+  btnBorrar.addEventListener("click", restablecerFormulario);
 };
 
 // Traemos los datos desde el servidor
@@ -106,9 +100,9 @@ const mostrarDatos = (datos) => {
             <td class="editable">${dato.nombre_apellidos}</td>
             <td class="editable">${dato.usuario}</td>
             <td class="editable">${dato.email}</td>
-            <td class="tipo-usuario editable" data-tipo="${
-              dato.tipo_usuario
-            }">${dato.tipo_usuario === 1 ? "Editor" : "Registrado"}</td>
+            <td class="tipo-usuario editable" data-tipo"${dato.tipo_usuario}">${
+      dato.tipo_usuario === 1 ? "Editor" : "Registrado"
+    }</td>
             <td>
               <button class="btn-borrar">Borrar</button>
               <button class="btn-guardar">Editar</button>
@@ -195,17 +189,13 @@ const contarEditores = () => {
   return contador;
 };
 
-// limite de editores a 3
-
 const validarLimiteEditores = (nuevoTipo) => {
   const editoresActuales = contarEditores();
   if (nuevoTipo === "1" && editoresActuales >= 3) {
-    mostrarMensaje(
-      "No se pueden tener mas de 3 ediores. Convierta a algun editor a tipo Registrado primero"
-    );
-    true;
+    mostrarMensaje("mas de 3 editores!", true);
+    return false;
   }
-  return false;
+  return true;
 };
 
 // Activamos la edición de una fila
@@ -277,17 +267,7 @@ const guardarCambios = async (id, boton) => {
     email: inputs[2].value,
     tipo_usuario: inputs[3].value,
   };
-  console.log(datos);
-  /*   const fila = boton.closest("tr");
-    const celdas = fila.querySelectorAll("td");
-    const nombre_apellidos =
-      celdas[2].querySelector("input")?.value || celdas[2].textContent;
-    const usuario =
-      celdas[3].querySelector("input")?.value || celdas[3].textContent;
-    const email =
-      celdas[4].querySelector("input")?.value || celdas[4].textContent;
-    const tipo_usuario = fila.querySelector(".tipo-usuario select")?.value || "2";
-   */
+
   try {
     const response = await fetch("api.php", {
       method: "POST",
@@ -298,18 +278,15 @@ const guardarCambios = async (id, boton) => {
     });
 
     const resultado = await response.json();
-
-    // Verificamos tanto el código de estado HTTP como el contenido de la respuesta
     if (resultado.error) {
-      // Mostrar mensaje de error
       mostrarMensaje(resultado.error, true);
     } else {
-      mostrarMensaje("Usuario actualizado correctamente");
+      mostrarMensaje("usuario acualizado correctamente");
       editandoEnCurso = false;
-      await cargarDatos(); //recargamos los datos despues de actualizar
+      await cargarDatos();
     }
   } catch (error) {
-    mostrarMensaje("Error al actualizar: " + error.message, true);
+    mostrarMensaje("Error al actualizar el usuario: " + error.message, true);
   }
 };
 
@@ -325,16 +302,15 @@ const insertarDato = async () => {
     });
 
     const resultado = await response.json();
-
-    if (!resultado.error) {
+    if (resultado.error) {
       mostrarMensaje(resultado.error, true);
     } else {
-      mostrarMensaje("Usuario creado correctamente");
-      restablecerFormulario();
-      await cargarDatos(); //recogemos los datos después de insertar
+      mostrarMensaje("Ususario insertado correctamente");
+      document.querySelector("#formUsuario").reset(); //restablecerFormulario();
+      await cargarDatos();
     }
   } catch (error) {
-    mostrarMensaje("Error al insertar: " + error.message, true);
+    mostrarMensaje("Error al crear el usuario: " + error.message, true);
   }
 };
 

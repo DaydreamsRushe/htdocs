@@ -13,11 +13,11 @@ class UsuarioController {
     }
 
     private function validarNombre($nombre){
-      $regex = '/^[a-zA-ZÀ-ýñÑçÇ\s]{5,30}$/';
+      $regex = '/^[a-zA-ZÀ-ýñÑçÇ\s]{5,30}$/u';
       return preg_match($regex, $nombre);
     }
 
-      private function validarUsuario($usuario){
+    private function validarUsuario($usuario){
       $regex = '/^[a-zA-Z0-9]{5,8}$/';
       return preg_match($regex, $usuario);
     }
@@ -50,7 +50,7 @@ class UsuarioController {
             $usuarioActual = $stmt->fetch(PDO::FETCH_ASSOC);
 
             // Si el usuario actual ya es editor, no contamos su cambio
-            if ($usuarioActual && $usuarioActual['tipo_usuario'] == 1) {
+            if ($usuarioActual['tipo_usuario'] == 1) {
                 return true;
             }
         }
@@ -70,11 +70,16 @@ class UsuarioController {
 
     public function create($data) {
 
-
-        if(!$this->validarLimiteEditores($data['tipo_usuario'] ?? 2, $data['id'])){
-          return ["error" => "No se pueden tener mas de 3 editores. Convierta algun editor a tipo Registrado primero"];
+        //Validar datos requeridos
+        if(empty($data['nombre_apellidos']) || empty($data['usuario']) || empty($data['email']) || empty($data['password'])){
+          return['error' => 'Todos los campos son requeridos'];
         }
 
+        //Validar limite editores
+        if(!$this->validarLimiteEditores($data['tipo_usuario'] ?? 2)){
+          return ["error" => "No se pueden tener mas de 3 editores. Convierta algun editor a tipo Registrado primero"];
+        }
+        
         if(!$this->validarNombre($data['nombre_apellidos'])){
           return ["error" => "El nombre debe contener solo letras, espacios y caracteres latinos, entre 5 y 30 caracteres"];
         }
@@ -93,10 +98,10 @@ class UsuarioController {
       
         // Asignar valores
         $this->usuario->nombre_apellidos = $data['nombre_apellidos']; //ARREGLARLO
-        $this->usuario->usuario = $usuario;
-        $this->usuario->email = $email;
-        $this->usuario->password = password_hash($password, PASSWORD_DEFAULT,["cost" => 14]);
-        $this->usuario->tipo_usuario = $tipoUsuario; // Por defecto es usuario registrado
+        $this->usuario->usuario = $data['usuario'];
+        $this->usuario->email = $data['email'];
+        $this->usuario->password = password_hash($data['password'], PASSWORD_DEFAULT,["cost" => 14]);
+        $this->usuario->tipo_usuario = $data['tipo_usuario']; // Por defecto es usuario registrado
         $this->usuario->foto = $data['foto'] ?? null; // Asignar la foto si existe
 
         if($this->usuario->create()) {
@@ -111,7 +116,7 @@ class UsuarioController {
         }
 
         
-        if(!$this->validarLimiteEditores($data['tipo_usuario'] ?? 2)){
+        if(!$this->validarLimiteEditores($data['tipo_usuario'] ?? 2, $data['id'])){
           return ["error" => "No se pueden tener mas de 3 editores. Convierta algun editor a tipo Registrado primero"];
         }
 
@@ -126,19 +131,11 @@ class UsuarioController {
         if(!filter_var($data['email'], FILTER_VALIDATE_EMAIL)){
           return ['error' => 'El fomrato del email no es válido'];
         }
-         if(!$this->validarPassword($data['password'])){
-          return ['error' => 'La contraseña debe tener entre 6 y 10 caracteres, incluyendo al menos una mayuscula una minuscula, un numero y uno de estos caracteres !@#*'];
-         }
-    
 
         $this->usuario->id = $data['id'];
         $this->usuario->nombre_apellidos = $data['nombre_apellidos'];
         $this->usuario->usuario = $data['usuario'];
         $this->usuario->email = $data['email'];
-        
-      /*   if(!empty($data['password'])) {
-            $this->usuario->password = password_hash($data['password'], PASSWORD_DEFAULT,["cost" => 14]);
-        } */
         
         if(isset($data['tipo_usuario'])) {
             $this->usuario->tipo_usuario = $data['tipo_usuario'];
@@ -173,6 +170,12 @@ class UsuarioController {
 
     public function login($email, $password) {
 
+        if(!filter_var($email,FILTER_VALIDATE_EMAIL)){
+          return ['success' => false, 'error' => 'El formato del mail no es valido'];
+        }
+        if(!$this->validarPaswword($password)){
+          return ['success' => false, 'error' => 'El password no es valido'];
+        }
         $query = "SELECT * FROM datos_usuarios WHERE email = :email AND tipo_usuario = 3 LIMIT 1";
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(':email', $email);

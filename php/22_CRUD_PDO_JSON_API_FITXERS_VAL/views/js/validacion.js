@@ -7,16 +7,16 @@ const regexUsuario = /^[a-zA-Z0-9]{5,8}$/;
 const regexPassword =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#*])[a-zA-Z\d!@#*]{6,10}$/;
 
-const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]$/;
+const emailRegex = /^[a-zA-Z0-9_]+@[a-zA-Z0-9_]+\.[a-zA-Z]{2,9}$/;
 
-window.erroresValidacion = {
+/* window.erroresValidacion = {
   errorNombre: document.querySelector("#errorNombre"),
   errorUsuario: document.querySelector("#errorUsuario"),
   errorEmail: document.querySelector("#errorEmail"),
   errorPassword: document.querySelector("#errorPassword"),
   errorTipo: document.querySelector("#errorTipo"),
   errorFoto: document.querySelector("#errorFoto"),
-};
+}; */
 
 const validarFomularioLogin = () => {
   console.log("hola");
@@ -66,13 +66,13 @@ const validarCampoTabla = (campo, valor) => {
   console.log("validando tabla");
   switch (campo) {
     case "nombre":
-      return !regexNombre.match(valor);
+      return regexNombre.test(valor);
     case "usuario":
-      return !regexUsuario.match(valor);
+      return regexUsuario.test(valor);
     /* case "password":
       return !regexPassword.match(valor); */
     case "email":
-      return !emailRegex.match(valor);
+      return emailRegex.test(valor);
     default:
       return true;
   }
@@ -80,11 +80,4 @@ const validarCampoTabla = (campo, valor) => {
 
 const restablecerFormulario = () => {
   document.querySelector("#formUsuario").reset();
-
-  /*   document.querySelector("#nombre").value = "";
-    document.querySelector("#usuario").value = "";
-    document.querySelector("#email").value = "";
-    document.querySelector("#password").value = "";
-    document.querySelector("#tipo_usuario").value = "";
-    document.querySelector("#foto").value = ""; */
 };

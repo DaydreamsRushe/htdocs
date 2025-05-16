@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_FILES['foto'])) {
         $action = $_POST['action'] ?? '';       
         if ($action === 'update_foto') {//evento
-          if (!isset($_SESSION['adminLoggedIn']) || $_SESSION['adminLoggedIn'] !== true) {
+          if (!isset($_SESSION['adminLoggedIn'])) {
             echo json_encode(['error' => 'No autorizado']);
             exit;
           }
@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         } else if ($action === 'create') {
 
-           if (!isset($_SESSION['adminLoggedIn']) || $_SESSION['adminLoggedIn'] !== true) {
+           if (!isset($_SESSION['adminLoggedIn']) || $_SESSION['adminLoggedIn'] !== 3) {
             echo json_encode(['error' => 'No autorizado']);
             exit;
           }
@@ -122,7 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else if (isset($_POST['action']) && $_POST['action'] === 'create') {
         // Procesamos la creación de usuario sin foto
 
-         if (!isset($_SESSION['adminLoggedIn']) || $_SESSION['adminLoggedIn'] !== true) {
+         if (!isset($_SESSION['adminLoggedIn']) || $_SESSION['adminLoggedIn'] !== 3) {
             echo json_encode(['error' => 'No autorizado']);
             exit;
           }
@@ -188,7 +188,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         case 'update':
 
-          if (!isset($_SESSION['adminLoggedIn']) || $_SESSION['adminLoggedIn'] !== true) {
+          if (!isset($_SESSION['adminLoggedIn'])) {
             echo json_encode(['error' => 'No autorizado']);
             exit;
           }
@@ -217,7 +217,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             
         case 'delete':
 
-          if (!isset($_SESSION['adminLoggedIn']) || $_SESSION['adminLoggedIn'] !== true) {
+          if (!isset($_SESSION['adminLoggedIn'])) {
             echo json_encode(['error' => 'No autorizado']);
             exit;
           }

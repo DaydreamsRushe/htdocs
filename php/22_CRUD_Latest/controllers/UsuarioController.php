@@ -62,11 +62,7 @@ class UsuarioController {
     
     public function index() {
       $usuarios = $this->usuario->read();
-      // $query = "SELECT * FROM datos_usuarios WHERE tipo_usuario != 3";
-      //   $stmt = $this->db->prepare($query);
-      //   $stmt->execute();
-      //   $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        return json_encode($usuarios);
+      return json_encode($usuarios);
     }
 
     public function create($data) {
@@ -183,7 +179,7 @@ class UsuarioController {
         }
         
 
-      $query = "SELECT * FROM datos_usuarios WHERE email = :email AND tipo_usuario = 3 LIMIT 1";
+      $query = "SELECT * FROM datos_usuarios WHERE email = :email /* AND tipo_usuario = 3 */ LIMIT 1";
       $stmt = $this->db->prepare($query);
       $stmt->bindParam(':email', $email);
       $stmt->execute();
@@ -194,9 +190,9 @@ class UsuarioController {
           if (session_status() === PHP_SESSION_NONE) {
             session_start();
           }
-          $_SESSION['adminLoggedIn'] = true;
+          $_SESSION['adminLoggedIn'] = $user['tipo_usuario'];
           $_SESSION['adminEmail'] = $email;
-          return ['success' => true];
+          return ['success' => true, 'tipo_usuario' => $user['tipo_usuario'], 'user' => $user['id']];
         }
       }
       return ['success' => false, 'error' => 'Credenciales incorrectas'];

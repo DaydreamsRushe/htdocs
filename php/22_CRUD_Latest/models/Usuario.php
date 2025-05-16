@@ -18,10 +18,19 @@ class Usuario {
 
     // Obtener todos los usuarios
     public function read() {
+      if($_SESSION['adminLoggedIn'] && $_SESSION['adminLoggedIn'] !== 2){
         $query = "SELECT * FROM " . $this->table_name . " WHERE tipo_usuario !=3 ORDER BY id";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+      }else{
+        $number = $_SESSION['userLoggedIn'];
+        $query = "SELECT * FROM " . $this->table_name . " WHERE id = :id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":id", $number, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+      }
     }
 
     // Crear usuario

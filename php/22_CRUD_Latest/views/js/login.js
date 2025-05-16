@@ -54,7 +54,8 @@ document.addEventListener("DOMContentLoaded", () => {
       })
       .then((data) => {
         if (data.success) {
-          localStorage.setItem("adminLoggedIn", "true");
+          localStorage.setItem("adminLoggedIn", data.tipo_usuario);
+          localStorage.setItem("userLoggedIn", data.user);
           window.location.href = "index.html";
         } else {
           alert(data.error || "Credenciales incorrectas");

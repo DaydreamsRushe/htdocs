@@ -12,14 +12,27 @@ html {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
+
 .navbar {
+  width: 100%;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  justify-content: center;
   padding: 0.5rem 1rem;
-  background-color: #f8f9fa; /* color de fondo claro */
+  background-color: #f05112; /* color de fondo claro */
   font-family: Arial, sans-serif;
 }
+
+
+.head-container {
+  display: flex;
+  justify-content: space-between;
+  width: 70%;
+  gap: 40px;
+  align-items: center;
+  justify-content: space-between;
+}
+
 
 /* Marca de la barra */
 .brand {
@@ -27,6 +40,7 @@ html {
   font-weight: bold;
   color: #000;
   text-decoration: none;
+  display: block;
 }
 
 /* Formulario en línea */

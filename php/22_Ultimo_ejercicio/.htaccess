@@ -1,0 +1,50 @@
+Options All -Indexes
+
+#RewriteEngine On - Activa el motor de reescritura de Apache.
+
+
+RewriteEngine On
+#Las condiciones RewriteCond:
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+
+
+#Estas líneas verifican que la solicitud no sea para un directorio (-d) o un archivo (-f) existente.
+#Para URLs con dos parámetros:
+#Esta regla convierte URLs como:
+RewriteRule ^([-a-zA-Z0-9/]+)/([0-9a-zA-Z/]+)$ index.php?tpls=$1&id=$2
+#http://tudominio.com/peliculas/123
+#en:
+#http://tudominio.com/index.php?tpls=peliculas&id=123
+
+
+#Para URLs con un solo parámetro:
+RewriteRule ^([-a-zA-Z0-9/]+)$ index.php?tpls=$1[QSA,L]
+#Esta regla convierte URLs como:
+#http://tudominio.com/peliculas
+#en:
+#http://tudominio.com/index.php?tpls=peliculas
+
+
+#La diferencia principal con las otras reglas es que esta:
+#Mantiene TODOS los parámetros GET originales
+#No transforma la estructura de la URL
+#Es útil cuando necesitas mantener múltiples parámetros GET sin transformarlos
+#Es más flexible para URLs con muchos parámetros
+#Esta regla es particularmente útil si:
+#Necesitas mantener la estructura original de los parámetros GET
+#Tienes formularios que envían múltiples parámetros
+#Quieres preservar la cadena de consulta completa sin modificarla
+RewriteRule ^([-a-zA-Z0-9/]+)$ index.php?%{QUERY_STRING} [L,NC]
+
+#Regla para manejar tres o mas variables GET
+RewriteRule ^([-a-zA-Z0-9/]+)/([0-9a-zA-Z/]+)/([0-9a-zA-Z/]+)$ index.php?tpls=$1&id=$2&accion=$3
+
+
+# asegurando el archivo htaccess#
+
+<Files .htaccess>
+order allow,deny
+deny from all
+</Files>
+

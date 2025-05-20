@@ -1,4 +1,5 @@
--- Active: 1741626660969@@127.0.0.1@3306@usuarisrole
+-- Active: 1747734032471@@127.0.0.1@3306@usuarisrole
+
 DROP DATABASE IF EXISTS usuarisrole;
 CREATE DATABASE  usuarisrole DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE usuarisrole;

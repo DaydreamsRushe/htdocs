@@ -28,7 +28,6 @@ html {
   width: 70%;
   gap: 40px;
   align-items: center;
-  justify-content: space-between;
 }
 
 .brand {
@@ -39,9 +38,34 @@ html {
   display: block;
 }
 
+.head-menu {
+  display: flex;
+  justify-content: space-between;
+  width: 70%;
+  align-items: center;
+}
+
+.head-menu > section {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  align-items: center;
+}
+
 .form-inline {
   display: flex;
   align-items: center;
+  gap: 40px;
+}
+
+.head-option {
+  text-decoration: none;
+  color: #000;
+}
+
+.head-option:active {
+  text-decoration: dashed;
+  color: #ded2d2;
 }
 
 .btn-primary {

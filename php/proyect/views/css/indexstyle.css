@@ -81,3 +81,40 @@ html {
 .btn-primary:hover {
   background-color: #0056b3;
 }
+
+.menu-colapsable {
+  display: none;
+}
+
+@media screen and (max-width: 900px) {
+  .menu-colapsable {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .head-menu {
+    display: none;
+  }
+
+  .show-menu {
+    display: flex;
+    cursor: pointer;
+  }
+
+  #show-menu {
+    display: none;
+  }
+
+  #show-menu ~ ul {
+    display: none;
+  }
+
+  #show-menu[type="checkbox"]:checked ~ ul {
+    display: block;
+    margin: 1rem;
+    margin-left: 2rem;
+    display: block;
+    opacity: 1;
+    animation: opacidad 1s ease;
+  }
+}

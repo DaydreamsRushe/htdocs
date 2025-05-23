@@ -16,7 +16,7 @@
             <section>
               <article><a class="head-option" href=""><?php echo $lang['conocenos']; ?></a></article>
               <article>
-                <a class="head-option" href="psicologos.php"><?php echo $lang['somos']; ?></a>
+                <a class="head-option" href=""><?php echo $lang['somos']; ?></a>
               </article>
               <article><a class="head-option" href=""><?php echo $lang['contacto']; ?></a></article>
             </section>
@@ -45,26 +45,7 @@
     </header>
     <!-- FINAL DE CABECERA -->
      <main>
-        <div class="presentation-section">
-          <div></div>
-          <section class="presentacion">
-            <h2><?php echo $lang['presenttitle']; ?></h2>
-            <h3><?php echo $lang['presentsubtitle']; ?></h3>
-            <p><?php echo $lang['presenttext']; ?></p>
-            <button class="btn-secondary" id="btn-cuestion"><?php echo $lang['cuestionario']; ?></button>
-          </section>
-          <div></div>
-        </div>
-        <div class="presentation-oferta">
-          <section class="oferta">
-            <img src="assets/img/firsttalk.png" alt="hablemos" name="hablemos"/>
-            <article>
-              <h2><?php echo $lang['ofertatitle']; ?></h2>
-              <p><?php echo $lang['ofertatext']; ?></p>
-              <button class="btn-secondary" id="btn-conocenos"><?php echo $lang['conocenos']; ?></button>
-            </article>
-          </section>
-        </div>
+        
      </main>
      <footer>
         <section>

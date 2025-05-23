@@ -22,7 +22,7 @@ function indice($lang)
   require 'views/tpl/index.tpl';
 }
 
-function conocenos($lang)
+function psicologos($lang)
 {
-    require 'views/tpl/conocenos.tpl';
+    require 'views/tpl/psicologos.tpl';
 }

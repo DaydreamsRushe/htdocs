@@ -45,7 +45,23 @@
     </header>
     <!-- FINAL DE CABECERA -->
      <main>
-        
+      <div class="table-container">
+          <h2>Lista de Usuarios</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Foto</th>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Especialidad</th>
+              </tr>
+            </thead>
+            <tbody id="tablaDatos">
+              <!-- Los datos se cargarán dinámicamente -->
+            </tbody>
+          </table>
+        </div>
      </main>
      <footer>
         <section>
@@ -57,5 +73,6 @@
           <article><a class="foot-option"  id="btn-sesion" ><?php echo $lang['inicio']; ?></a></article>
         </section>
      </footer>
+     <script src="views/js/psicologos.js"></script>
   </body>
 </html>

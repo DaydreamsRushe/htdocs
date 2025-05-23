@@ -10,7 +10,7 @@ CREATE TABLE usuario (
     email VARCHAR(100) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
     tipo_usuario TINYINT NOT NULL,
-    foto VARCHAR(255)
+    foto VARCHAR(255),
     CONSTRAINT chk_tipo_usuario CHECK (tipo_usuario IN (1, 2))
 )ENGINE=InnoDB;
 
@@ -36,7 +36,7 @@ CREATE TABLE diagnostico (
 CREATE TABLE especializa (
     id_profesional INT,
     especialidad VARCHAR(50),
-    PRIMARY KEY (id_profesional, dolencia),
+    PRIMARY KEY (id_profesional, especialidad),
     FOREIGN KEY (id_profesional) REFERENCES profesional(user_id),
     FOREIGN KEY (especialidad) REFERENCES enfermedad(nombre_enfermedad)
 )ENGINE=InnoDB;
@@ -56,7 +56,7 @@ CREATE TABLE visita (
     FOREIGN KEY (id_profesional) REFERENCES profesional(user_id),
     FOREIGN KEY (id_paciente) REFERENCES paciente(user_id),
     FOREIGN KEY (diagnostico) REFERENCES diagnostico(id_diagnostico),
-    CONSTRAINT professional_date UNIQUE (id_profesional, fecha),
+    CONSTRAINT professional_date UNIQUE (id_profesional, fecha)
 )ENGINE=InnoDB;
 
 /* La tabla enfermedad contendra todas las dolencias que se traten en la aplicacion */
@@ -68,16 +68,16 @@ INSERT INTO enfermedad (nombre_enfermedad, nombre_farmaco) VALUES ("Adiccion", "
 INSERT INTO enfermedad (nombre_enfermedad, nombre_farmaco) VALUES ("Funcionamiento diario", "Modafinilo");
 
 /* Creare 10 usuarios profesionales para hacer pruevas */
-INSERT INTO usuario (usuario, email, password, tipo_usuario) VALUES ("Oscar Eroles","oscar@eroles.com","$2y$14$NNhc1x1rrlxy3MK8m8T1luH9R.ScukwY7urRVBYFYlH/GXNFw8QV6",2,);
-INSERT INTO usuario (usuario, email, password, tipo_usuario) VALUES ("Santiago Perolillos","santiago@perolillos.com","$2y$14$qFMdfX6A6dyWSlMLVMExge8y4bCzcQZrZAhuKHlRw8dRtJb4vDIj.",2,);
-INSERT INTO usuario (usuario, email, password, tipo_usuario) VALUES ("Marta Sanchez","marta@sanchez.com","$2y$14$Xcc2dD161csRnPhYJHiH0eXJFEXQscppuct1SF7OLALS8qbbjINta",2,);
-INSERT INTO usuario (usuario, email, password, tipo_usuario) VALUES ("Mila Torres","mila@torres.com","$2y$14$jkUjPO9O/0BXBmhBj7tpF.fVe9I37CVs9JND09DNnDYhfrwh3rHxe",2,);
-INSERT INTO usuario (usuario, email, password, tipo_usuario) VALUES ("Juanma Sortos","juanma@sortos.com","$2y$14$jN1jcRe3uZlsghD9OUawU.5NpnwY12TxDrfMh95gaY5Kjh8fDo0UG",2,);
-INSERT INTO usuario (usuario, email, password, tipo_usuario) VALUES ("Manuel Garrido","manuel@garrido.com","$2y$14$ANg/F58fwICIFnYg9iaN1u.zE7.UhRjyr0lWIeK29g0TEslXu4BLi",2,);
-INSERT INTO usuario (usuario, email, password, tipo_usuario) VALUES ("Jose Ortega","jose@ortega.com","$2y$14$vSECGMnkXL5za5C8HtwuJ.3mp4jluIUrO5oD6KZOtSPJhVqcGyNBu",2,);
-INSERT INTO usuario (usuario, email, password, tipo_usuario) VALUES ("Marta Suarez","marta@suarez.com","$2y$14$8BVaNexBXhWpkBd4gfSBMeq.HF4vIbDmZ6noQWXsK3Myvv9BzANDi",2,);
-INSERT INTO usuario (usuario, email, password, tipo_usuario) VALUES ("Sancho Panza","sancho@panza.com","$2y$14$2rsfo2FNNiPQudnrZxDrb.xAkb/dqvocWqT1LwCUp7/KAoY/1MDPe",2,);
-INSERT INTO usuario (usuario, email, password, tipo_usuario) VALUES ("Ariana Pequeña","ariana@pequeña.com","$2y$14$2Y4NYocr2K7FNIWZVZfyeuF4iZKkL1VzqFMEzLsOQRq5dlIHf77UC",2,);
+INSERT INTO usuario (usuario, email, password, tipo_usuario) VALUES ("Oscar Eroles","oscar@eroles.com","$2y$14$NNhc1x1rrlxy3MK8m8T1luH9R.ScukwY7urRVBYFYlH/GXNFw8QV6",2);
+INSERT INTO usuario (usuario, email, password, tipo_usuario) VALUES ("Santiago Perolillos","santiago@perolillos.com","$2y$14$qFMdfX6A6dyWSlMLVMExge8y4bCzcQZrZAhuKHlRw8dRtJb4vDIj.",2);
+INSERT INTO usuario (usuario, email, password, tipo_usuario) VALUES ("Marta Sanchez","marta@sanchez.com","$2y$14$Xcc2dD161csRnPhYJHiH0eXJFEXQscppuct1SF7OLALS8qbbjINta",2);
+INSERT INTO usuario (usuario, email, password, tipo_usuario) VALUES ("Mila Torres","mila@torres.com","$2y$14$jkUjPO9O/0BXBmhBj7tpF.fVe9I37CVs9JND09DNnDYhfrwh3rHxe",2);
+INSERT INTO usuario (usuario, email, password, tipo_usuario) VALUES ("Juanma Sortos","juanma@sortos.com","$2y$14$jN1jcRe3uZlsghD9OUawU.5NpnwY12TxDrfMh95gaY5Kjh8fDo0UG",2);
+INSERT INTO usuario (usuario, email, password, tipo_usuario) VALUES ("Manuel Garrido","manuel@garrido.com","$2y$14$ANg/F58fwICIFnYg9iaN1u.zE7.UhRjyr0lWIeK29g0TEslXu4BLi",2);
+INSERT INTO usuario (usuario, email, password, tipo_usuario) VALUES ("Jose Ortega","jose@ortega.com","$2y$14$vSECGMnkXL5za5C8HtwuJ.3mp4jluIUrO5oD6KZOtSPJhVqcGyNBu",2);
+INSERT INTO usuario (usuario, email, password, tipo_usuario) VALUES ("Marta Suarez","marta@suarez.com","$2y$14$8BVaNexBXhWpkBd4gfSBMeq.HF4vIbDmZ6noQWXsK3Myvv9BzANDi",2);
+INSERT INTO usuario (usuario, email, password, tipo_usuario) VALUES ("Sancho Panza","sancho@panza.com","$2y$14$2rsfo2FNNiPQudnrZxDrb.xAkb/dqvocWqT1LwCUp7/KAoY/1MDPe",2);
+INSERT INTO usuario (usuario, email, password, tipo_usuario) VALUES ("Ariana Pequeña","ariana@pequeña.com","$2y$14$2Y4NYocr2K7FNIWZVZfyeuF4iZKkL1VzqFMEzLsOQRq5dlIHf77UC",2);
 
 /* Esos mismos profesionales deben estar en la tabla de profesionales */
 INSERT INTO profesional (user_id, nombre_profesional) VALUES (1,"Oscar Eroles");

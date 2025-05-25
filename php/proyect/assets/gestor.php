@@ -26,3 +26,8 @@ function psicologos($lang)
 {
     require 'views/tpl/psicologos.tpl';
 }
+
+function login($lang)
+{
+  require 'views/tpl/login.tpl';
+}

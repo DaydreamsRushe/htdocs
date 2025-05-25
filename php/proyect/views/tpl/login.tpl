@@ -4,7 +4,11 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="views/css/indexstyle.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="views/css/loginstyle.css" />
     <title><?php echo $lang['title']; ?></title>
   </head>
   <body>
@@ -43,45 +47,59 @@
         </div>
       </div>
     </header>
-    <!-- FINAL DE CABECERA -->
-     <main>
-        <div class="presentation-section">
-          <div></div>
-          <section class="presentacion">
-            <h2><?php echo $lang['presenttitle']; ?></h2>
-            <h3><?php echo $lang['presentsubtitle']; ?></h3>
-            <p><?php echo $lang['presenttext']; ?></p>
-            <button class="btn-secondary" id="btn-cuestion"><?php echo $lang['cuestionario']; ?></button>
-          </section>
-          <div></div>
+    <main>
+        <div class="container">
+      <div class="row justify-content-center mt-5">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="text-center">Login</h3>
+            </div>
+            <div class="card-body">
+              <form id="loginForm">
+                <div class="mb-3">
+                  <label for="email" class="form-label">Email</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    name="email"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="password" class="form-label">Contraseña</label>
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="password"
+                    name="password"
+                    required
+                  />
+                </div>
+                <div class="d-grid">
+                  <button type="submit" class="btn btn-primary">
+                    Iniciar Sesión
+                  </button>
+                  <a href="">¿Has olvidado tu contraseña?</a>
+                </div>
+              </form>
+            </div>
+          </div>
         </div>
-        <div class="presentation-oferta">
-          <section class="oferta">
-            <img src="assets/img/firsttalk.png" alt="hablemos" name="hablemos"/>
-            <article>
-              <h2><?php echo $lang['ofertatitle']; ?></h2>
-              <p><?php echo $lang['ofertatext']; ?></p>
-              <button class="btn-secondary" id="btn-conocenos"><?php echo $lang['conocenos']; ?></button>
-            </article>
-          </section>
-        </div>
-     </main>
-     <footer>
+      </div>
+    </div>
+    </main>
+    <footer>
         <section>
           <article><a class="foot-option" href=""><?php echo $lang['conocenos']; ?></a></article>
           <article>
             <a class="foot-option" href="psicologos.php"><?php echo $lang['somos']; ?></a>
           </article>
           <article><a class="foot-option" href=""><?php echo $lang['contacto']; ?></a></article>
-          <article><a class="foot-option"  id="btn-sesion"  href="login.php"><?php echo $lang['inicio']; ?></a></article>
+          <article><a class="foot-option"  id="btn-sesion" href="login.php"><?php echo $lang['inicio']; ?></a></article>
         </section>
      </footer>
-     <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        document.querySelector("#btn-sesion").addEventListener("click", () => {
-          document.location.href = "login.php";
-        });
-      });
-     </script>
+     <script src="views/js/login.js"></script>
   </body>
 </html>

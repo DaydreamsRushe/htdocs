@@ -46,19 +46,18 @@
     <!-- FINAL DE CABECERA -->
      <main>
       <div class="table-container">
-          <h2>Lista de Usuarios</h2>
+          <h2><?php echo $lang['titulolista']; ?></h2>
           <table>
             <thead>
               <tr>
                 <th>ID</th>
                 <th>Foto</th>
-                <th>Nombre</th>
+                <th><?php echo $lang['nombre']; ?></th>
                 <th>Email</th>
-                <th>Especialidad</th>
+                <th><?php echo $lang['especialidad']; ?></th>
               </tr>
             </thead>
             <tbody id="tablaDatos">
-              <!-- Los datos se cargarán dinámicamente -->
             </tbody>
           </table>
         </div>
@@ -67,10 +66,10 @@
         <section>
           <article><a class="foot-option" href=""><?php echo $lang['conocenos']; ?></a></article>
           <article>
-            <a class="foot-option" href=""><?php echo $lang['somos']; ?></a>
+            <a class="foot-option" href="psicologos.php"><?php echo $lang['somos']; ?></a>
           </article>
           <article><a class="foot-option" href=""><?php echo $lang['contacto']; ?></a></article>
-          <article><a class="foot-option"  id="btn-sesion" ><?php echo $lang['inicio']; ?></a></article>
+          <article><a class="foot-option"  id="btn-sesion"  href="login.php"><?php echo $lang['inicio']; ?></a></article>
         </section>
      </footer>
      <script src="views/js/psicologos.js"></script>

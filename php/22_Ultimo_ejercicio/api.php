@@ -11,7 +11,6 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-$controller = new UsuarioController();
 
 // Función anónima guardada en una variable para verificar si el usuario está logueado
 $verificarSesion = function() {

@@ -19,6 +19,56 @@
       $this->especialidad = new Especialidad($this->db);
     }
     
+    private function validarCampo($valor, $tipo) {
+        return preg_match(self::REGEX[$tipo], $valor);
+    }
+
+    private function validarEmail($email) {
+        return filter_var($email, FILTER_VALIDATE_EMAIL);
+    }
+
+
+    private function validarDatosUsuario($data, $esActualizacion = false) {
+        $errores = [];
+
+        if (!$esActualizacion && empty($data['password'])) {
+            $errores[] = "La contraseña es requerida";
+        }
+
+        if (empty($data['nombre']) || !$this->validarCampo($data['nombre'], 'nombre')) {
+            $errores[] = "El nombre debe contener solo letras, espacios y caracteres latinos, entre 5 y 30 caracteres";
+        }
+
+        if (empty($data['email']) || !$this->validarEmail($data['email'])) {
+            $errores[] = "El formato del email no es válido";
+        }
+
+        if (!$esActualizacion && !$this->validarCampo($data['password'], 'password')) {
+            $errores[] = "La contraseña debe tener entre 6 y 10 caracteres, incluyendo al menos una mayúscula, una minúscula, un número y uno de estos caracteres: !@#*";
+        }
+
+        return $errores;
+    }
+
+    public function create($data) {
+        $errores = $this->validarDatosUsuario($data);
+        
+        if (!empty($errores)) {
+            return ["error" => $errores[0]];
+        }
+
+        $this->usuario->nombre = $data['nombre'];
+        $this->usuario->email = $data['email'];
+        $this->usuario->password = password_hash($data['password'], PASSWORD_DEFAULT, ['cost' => 14]);
+        $this->usuario->tipo_usuario = $data['tipo_usuario'] ?? 1;
+        $this->usuario->foto = $data['foto'] ?? null;
+
+        return $this->usuario->create();
+            /* ? ["mensaje" => "Usuario creado correctamente"]
+            : ["error" => "No se pudo crear el usuario"] */
+    }
+
+
     public function index() {
   
       $datos_profesional = $this->usuario->readProfesionals();
@@ -33,15 +83,6 @@
         array_push($datos, $d);
       };
       return json_encode($datos);
-    }
-
-
-    private function validarCampo($valor, $tipo) {
-        return preg_match(self::REGEX[$tipo], $valor);
-    }
-
-    private function validarEmail($email) {
-        return filter_var($email, FILTER_VALIDATE_EMAIL);
     }
 
 

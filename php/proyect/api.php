@@ -14,6 +14,30 @@ if (session_status() === PHP_SESSION_NONE) {
 
 $usercontroller = new ProfessionalController();
 
+$procesarArchivo = function($file) {
+    $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+    $maxSize = 2 * 1024 * 1024; // 2MB
+
+    if (!in_array($file['type'], $allowedTypes)) {
+        return ['error' => 'Tipo de archivo no permitido. Use JPEG, PNG o GIF'];
+    }
+
+    if ($file['size'] > $maxSize) {
+        return ['error' => 'El archivo es demasiado grande. Máximo 2MB'];
+    }
+
+    $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
+    $newFileName = uniqid() . '.' . $extension;
+    $target_file = 'pictures/' . $newFileName;
+
+    if (move_uploaded_file($file['tmp_name'], $target_file)) {
+        return "pictures/" . basename($target_file);
+    }
+
+    return ['error' => 'Error al subir el archivo'];
+};
+
+
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     echo $usercontroller->index();
     exit;
@@ -44,6 +68,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $result = $usercontroller->login($data['email'], $data['password']);
             echo json_encode($result);
             break;
+
+        case 'create':
+            
+            $createData = [
+                'nombre' => $data['nombre'],
+                'email' => $data['email'],
+                'password' => $data['password'],
+                'tipo_usuario' => $data['tipo_usuario'] ?? 1,
+                'foto' => 'img/default-user.svg'
+            ];
+            if (isset($_FILES['foto']) && $_FILES['foto']['size'] > 0) {
+                $resultado = $procesarArchivo($_FILES['foto']);
+                if (is_string($resultado)) {
+                    $createData['foto'] = $resultado;
+                } else {
+                    echo json_encode($resultado);
+                    exit;
+                }
+            }
+            echo json_encode($usercontroller->create($createData));
+            break;
+
 
         default:
             echo json_encode(['error' => 'Acción no válida']);

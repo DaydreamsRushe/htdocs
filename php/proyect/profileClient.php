@@ -1,6 +1,6 @@
 <?php
 require_once 'assets/gestor.php';
 
-profileProfesional($lang_profesional);
+profileClient($lang_client);
 
 ?>

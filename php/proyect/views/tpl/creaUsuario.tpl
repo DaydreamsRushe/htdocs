@@ -8,7 +8,7 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="views/css/loginstyle.css" />
+    <link rel="stylesheet" href="views/css/createstyle.css" />
     <title><?php echo $lang['title']; ?></title>
   </head>
   <body>
@@ -47,48 +47,51 @@
         </div>
       </div>
     </header>
-    <main>
-        <div class="container">
-      <div class="row justify-content-center mt-5">
-        <div class="col-md-6">
-          <div class="card">
-            <div class="card-header">
-              <h3 class="text-center"><?php echo $lang['access']; ?></h3>
+    <main class="container">
+      <div class="content-wrapper">
+        <div class="form-container">
+          <h2><?php echo $lang['creacion']; ?></h2>
+          <form id="formUsuario" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+              <label for="nombre"><?php echo $lang['nombre']; ?>:</label>
+              <input
+                type="text"
+                id="nombre"
+                name="nombre"
+                placeholder="Nombre y Apellidos"
+              />
             </div>
-            <div class="card-body">
-              <form id="loginForm">
-                <div class="mb-3">
-                  <label for="email" class="form-label">Email</label>
-                  <input
-                    type="email"
-                    class="form-control"
-                    id="email"
-                    name="email"
-                    required
-                  />
-                </div>
-                <div class="mb-3">
-                  <label for="password" class="form-label"><?php echo $lang['contrasenya']; ?></label>
-                  <input
-                    type="password"
-                    class="form-control"
-                    id="password"
-                    name="password"
-                    required
-                  />
-                </div>
-                <div class="d-grid">
-                  <button type="submit" class="btn btn-primary">
-                    <?php echo $lang['inicio']; ?>
-                  </button>
-                  <span><?php echo $lang['crea']; ?><a href="creaUsuario.php"><?php echo $lang['click']; ?></a></span>
-                </div>
-              </form>
+            <div class="form-group">
+              <label for="email">Email:</label>
+              <input type="email" id="email" name="email" placeholder="email" />
             </div>
-          </div>
+            <div class="form-group">
+              <label for="password"><?php echo $lang['contrasenya']; ?>:</label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Contraseña"
+              />
+            </div>
+            <div class="form-group">
+              <label for="tipo_usuario"><?php echo $lang['tipousuario']; ?>:</label>
+              <select id="tipo_usuario" name="tipo_usuario">
+                <option value="2"><?php echo $lang['profesional']; ?></option>
+                <option value="1"><?php echo $lang['paciente']; ?></option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="foto">Foto de Perfil:</label>
+              <input type="file" id="foto" name="foto" accept="image/*" />
+            </div>
+            <div class="form-actions">
+              <button type="submit" id="btnInsertar"><?php echo $lang['crearusuari']; ?></button>
+              <button type="button" id="btnBorrar"><?php echo $lang['restablecer']; ?></button>
+            </div>
+          </form>
         </div>
       </div>
-    </div>
     </main>
     <footer>
         <section>
@@ -100,6 +103,6 @@
           <article><a class="foot-option"  id="btn-sesion" href="login.php"><?php echo $lang['inicio']; ?></a></article>
         </section>
      </footer>
-     <script src="views/js/login.js"></script>
+     <script src="views/js/crear.js"></script>
   </body>
 </html>

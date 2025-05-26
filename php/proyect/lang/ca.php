@@ -20,7 +20,7 @@ $lang_index = [
 ];
 
 $lang_psicologos = [
-    "title" => "SerenaLive - Inici",
+    "title" => "SerenaLive - Psicolegs",
     "conocenos" => "Conegueu-nos",
     "somos" => "Els nostres psicolegs",
     "contacto" => "Contacte",
@@ -34,13 +34,36 @@ $lang_psicologos = [
 ];
 
 $lang_login = [
-    "title" => "SerenaLive - Inici",
+    "title" => "SerenaLive - Login",
     "conocenos" => "Conegueu-nos",
     "somos" => "Els nostres psicolegs",
     "contacto" => "Contacte",
     "idioma" => "Idioma",
     "castellano" => "Castella",
     "catalan" => "Catala",
-    "inicio" => "Iniciar sessió"
+    "inicio" => "Iniciar sessió",
+    "contrasenya" => "Contrasenya",
+    "access" => "Accés d'Usuaris",
+    "crea" => "¿Encara no estas registrat? Fes ",
+    "click" => "click aquí"
+];
+
+$lang_crear = [
+    "title" => "SerenaLive - Creacio Usuari",
+    "conocenos" => "Conegueu-nos",
+    "somos" => "Els nostres psicolegs",
+    "contacto" => "Contacte",
+    "idioma" => "Idioma",
+    "castellano" => "Castella",
+    "catalan" => "Catala",
+    "inicio" => "Iniciar sessió",
+    "contrasenya" => "Contrasenya",
+    "nombre" => "Nom",
+    "tipousuario" => "Tipus d'Usuari",
+    "crearusuari" => "Crear Usuari",
+    "restablecer" => "Restablir",
+    "creacion" => "Creació d'Usuaris",
+    "profesional" => "Professional",
+    "paciente" => "Pacient"
 ];
 ?>

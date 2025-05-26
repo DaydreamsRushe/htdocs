@@ -31,3 +31,13 @@ function login($lang)
 {
   require 'views/tpl/login.tpl';
 }
+
+function creaUsuario($lang)
+{
+  require 'views/tpl/creaUsuario.tpl';
+}
+
+function profileProfesional($lang)
+{
+  require 'views/tpl/profileProfesional.tpl';
+}

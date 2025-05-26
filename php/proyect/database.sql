@@ -46,7 +46,17 @@ CREATE TABLE enfermedad (
   nombre_farmaco VARCHAR(50)
 )ENGINE=InnoDB;
 
+
+
 /* Todo paciente tendra solo un profesional asociado, pero un profesional puede tener varios */
+CREATE TABLE asignacion (
+    id_paciente INT PRIMARY KEY,
+    id_profesional INT,
+    FOREIGN KEY (id_paciente) REFERENCES paciente(user_id),
+    FOREIGN KEY (id_profesional) REFERENCES profesional(user_id)
+)ENGINE=InnoDB;
+
+
 CREATE TABLE visita (
     id_paciente INT,
     id_profesional INT,

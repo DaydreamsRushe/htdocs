@@ -2,11 +2,20 @@ document.addEventListener("DOMContentLoaded", function () {
   const loginForm = document.querySelector("#loginForm");
 
   // Verificamos si ya está logueado
-  /* const userData = JSON.parse(localStorage.getItem("userData")); CAMBIA ESTA PAGINA
+  const userData = JSON.parse(localStorage.getItem("userData"));
   if (userData) {
-    window.location.href = "personal.php";
+    tip_user = JSON.parse(localStorage['userData'])['tipo_usuario'];
+    if(tip_user === 2)
+      {
+        window.location.href = "profileProfesional.php";
+      }
+    else if(tip_user === 1)
+      {
+        window.location.href = "profileClient.php";
+      }
+    
   }
- */
+
   // Expresiones regulares para validación
   const regexEmail =
     /[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,9}/;
@@ -69,8 +78,12 @@ document.addEventListener("DOMContentLoaded", function () {
               nombre: data.user.nombre,
             })
           );
-          console.log(localStorage['userData']);
-          window.location.href = "profileProfesional.php"; /* CAMBIA ESTA PAGINA */
+          tip_user = JSON.parse(localStorage['userData'])['tipo_usuario'];
+          if(tip_user === 2){
+            window.location.href = "profileProfesional.php";
+          }else if(tip_user === 1){
+            window.location.href = "profileClient.php";
+          }
         } else {
           alert(data.error || "Credenciales incorrectas");
         }

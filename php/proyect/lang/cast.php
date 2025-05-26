@@ -66,4 +66,26 @@ $lang_crear = [
     "profesional" => "Profesional",
     "paciente" => "Paciente"
 ];
+
+$lang_profesional = [
+    "title" => "SerenaLive - Creacion Usuario",
+    "conocenos" => "Conocenos",
+    "somos" => "Nuestros psicologos",
+    "contacto" => "Contacto",
+    "idioma" => "Idioma",
+    "castellano" => "Castellano",
+    "catalan" => "Catalan",
+    "cerrar" => "Cerrar sesion"
+];
+
+$lang_client = [
+    "title" => "SerenaLive - Creacion Usuario",
+    "conocenos" => "Conocenos",
+    "somos" => "Nuestros psicologos",
+    "contacto" => "Contacto",
+    "idioma" => "Idioma",
+    "castellano" => "Castellano",
+    "catalan" => "Catalan",
+    "cerrar" => "Cerrar sesion"
+];
 ?>

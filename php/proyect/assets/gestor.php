@@ -41,3 +41,8 @@ function profileProfesional($lang)
 {
   require 'views/tpl/profileProfesional.tpl';
 }
+
+function profileClient($lang)
+{
+  require 'views/tpl/profileClient.tpl';
+}

@@ -78,12 +78,12 @@ INSERT INTO enfermedad (nombre_enfermedad, nombre_farmaco) VALUES ("Adiccion", "
 INSERT INTO enfermedad (nombre_enfermedad, nombre_farmaco) VALUES ("Funcionamiento diario", "Modafinilo");
 
 /* Creare 10 usuarios profesionales para hacer pruevas */
-INSERT INTO usuario (usuario, email, password, tipo_usuario) VALUES ("Oscar Eroles","oscar@eroles.com","$2y$14$NNhc1x1rrlxy3MK8m8T1luH9R.ScukwY7urRVBYFYlH/GXNFw8QV6",2);
-INSERT INTO usuario (usuario, email, password, tipo_usuario) VALUES ("Santiago Perolillos","santiago@perolillos.com","$2y$14$qFMdfX6A6dyWSlMLVMExge8y4bCzcQZrZAhuKHlRw8dRtJb4vDIj.",2);
-INSERT INTO usuario (usuario, email, password, tipo_usuario) VALUES ("Marta Sanchez","marta@sanchez.com","$2y$14$Xcc2dD161csRnPhYJHiH0eXJFEXQscppuct1SF7OLALS8qbbjINta",2);
-INSERT INTO usuario (usuario, email, password, tipo_usuario) VALUES ("Mila Torres","mila@torres.com","$2y$14$jkUjPO9O/0BXBmhBj7tpF.fVe9I37CVs9JND09DNnDYhfrwh3rHxe",2);
-INSERT INTO usuario (usuario, email, password, tipo_usuario) VALUES ("Juanma Sortos","juanma@sortos.com","$2y$14$jN1jcRe3uZlsghD9OUawU.5NpnwY12TxDrfMh95gaY5Kjh8fDo0UG",2);
-INSERT INTO usuario (usuario, email, password, tipo_usuario) VALUES ("Manuel Garrido","manuel@garrido.com","$2y$14$ANg/F58fwICIFnYg9iaN1u.zE7.UhRjyr0lWIeK29g0TEslXu4BLi",2);
+INSERT INTO usuario (usuario, email, password, tipo_usuario, foto) VALUES ("Oscar Eroles","oscar@eroles.com","$2y$14$NNhc1x1rrlxy3MK8m8T1luH9R.ScukwY7urRVBYFYlH/GXNFw8QV6",2,"pictures/user_3.jpg");
+INSERT INTO usuario (usuario, email, password, tipo_usuario, foto) VALUES ("Santiago Perolillos","santiago@perolillos.com","$2y$14$qFMdfX6A6dyWSlMLVMExge8y4bCzcQZrZAhuKHlRw8dRtJb4vDIj.",2,"pictures/user_4.jpg");
+INSERT INTO usuario (usuario, email, password, tipo_usuario, foto) VALUES ("Marta Sanchez","marta@sanchez.com","$2y$14$Xcc2dD161csRnPhYJHiH0eXJFEXQscppuct1SF7OLALS8qbbjINta",2,"pictures/user_2.jpg");
+INSERT INTO usuario (usuario, email, password, tipo_usuario, foto) VALUES ("Mila Torres","mila@torres.com","$2y$14$jkUjPO9O/0BXBmhBj7tpF.fVe9I37CVs9JND09DNnDYhfrwh3rHxe",2,"pictures/user_5.jpg");
+INSERT INTO usuario (usuario, email, password, tipo_usuario, foto) VALUES ("Juanma Sortos","juanma@sortos.com","$2y$14$jN1jcRe3uZlsghD9OUawU.5NpnwY12TxDrfMh95gaY5Kjh8fDo0UG",2,"pictures/user_8.jpg");
+INSERT INTO usuario (usuario, email, password, tipo_usuario, foto) VALUES ("Manuel Garrido","manuel@garrido.com","$2y$14$ANg/F58fwICIFnYg9iaN1u.zE7.UhRjyr0lWIeK29g0TEslXu4BLi",2,"pictures/user_10.jpg");
 INSERT INTO usuario (usuario, email, password, tipo_usuario) VALUES ("Jose Ortega","jose@ortega.com","$2y$14$vSECGMnkXL5za5C8HtwuJ.3mp4jluIUrO5oD6KZOtSPJhVqcGyNBu",2);
 INSERT INTO usuario (usuario, email, password, tipo_usuario) VALUES ("Marta Suarez","marta@suarez.com","$2y$14$8BVaNexBXhWpkBd4gfSBMeq.HF4vIbDmZ6noQWXsK3Myvv9BzANDi",2);
 INSERT INTO usuario (usuario, email, password, tipo_usuario) VALUES ("Sancho Panza","sancho@panza.com","$2y$14$2rsfo2FNNiPQudnrZxDrb.xAkb/dqvocWqT1LwCUp7/KAoY/1MDPe",2);

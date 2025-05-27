@@ -85,6 +85,14 @@
       return json_encode($datos);
     }
 
+    public function clients($id){
+        $query = "SELECT * FROM paciente WHERE user_id in (SELECT id_paciente FROM asignacion WHERE id_profesional = :id)";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute([':id' => $id]);
+        $clients = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return json_encode($clients);
+    }
+
 
     public function login($email, $password) {
         if (!$this->validarEmail($email)) {
@@ -110,7 +118,8 @@
                     'id' => $user['id'],
                     'email' => $user['email'],
                     'tipo_usuario' => $user['tipo_usuario'],
-                    'nombre' => $user['usuario']
+                    'nombre' => $user['usuario'],
+                    'foto' => $user['foto']
                 ];
 
                 return [
@@ -119,7 +128,8 @@
                         'id' => $user['id'],
                         'email' => $user['email'],
                         'tipo_usuario' => $user['tipo_usuario'],
-                        'nombre' => $user['usuario']
+                        'nombre' => $user['usuario'],
+                        'foto' => $user['foto']
                     ]
                 ];
             }

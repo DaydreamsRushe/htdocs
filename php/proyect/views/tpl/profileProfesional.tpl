@@ -8,7 +8,7 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="views/css/createstyle.css" />
+    <link rel="stylesheet" href="views/css/profile.css" />
     <title><?php echo $lang['title']; ?></title>
   </head>
   <body>
@@ -48,7 +48,23 @@
       </div>
     </header>
     <main class="container">
-
+      <section class="personal-data" id="personal-data">
+        <div class="form-container" id="personal-container">
+        </div>
+      </section>
+      <section id="client-list">
+        <div class="form-container">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Cliente</th>
+              </tr>
+            </thead>
+            <tbody id="tablaClient"></tbody>
+          </table>
+        </div>
+      </section>
     </main>
     <footer>
         <section>

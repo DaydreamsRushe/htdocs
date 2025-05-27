@@ -36,6 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Validar contraseña
     if (!regexPassword.test(password)) {
+      console.log(password);
       alert(
         "La contraseña debe tener entre 6 y 10 caracteres, incluyendo al menos una mayúscula, una minúscula, un número y uno de estos caracteres: !@#*"
       );
@@ -76,6 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
               email: data.user.email,
               tipo_usuario: data.user.tipo_usuario,
               nombre: data.user.nombre,
+              foto: data.user.foto
             })
           );
           tip_user = JSON.parse(localStorage['userData'])['tipo_usuario'];

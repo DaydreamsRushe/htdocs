@@ -26,6 +26,13 @@ CREATE TABLE profesional (
     FOREIGN KEY (user_id) REFERENCES usuario(id)
 )ENGINE=InnoDB;
 
+
+CREATE TABLE enfermedad (
+  nombre_enfermedad VARCHAR(50) PRIMARY KEY,
+  nombre_farmaco VARCHAR(50)
+)ENGINE=InnoDB;
+
+
 CREATE TABLE diagnostico (
     id_diagnostico INT PRIMARY KEY AUTO_INCREMENT,
     nombre_dolencia VARCHAR(50) NOT NULL,
@@ -41,10 +48,6 @@ CREATE TABLE especializa (
     FOREIGN KEY (especialidad) REFERENCES enfermedad(nombre_enfermedad)
 )ENGINE=InnoDB;
 
-CREATE TABLE enfermedad (
-  nombre_enfermedad VARCHAR(50) PRIMARY KEY,
-  nombre_farmaco VARCHAR(50)
-)ENGINE=InnoDB;
 
 
 
@@ -52,8 +55,10 @@ CREATE TABLE enfermedad (
 CREATE TABLE asignacion (
     id_paciente INT PRIMARY KEY,
     id_profesional INT,
+    id_diagnostico INT,
     FOREIGN KEY (id_paciente) REFERENCES paciente(user_id),
-    FOREIGN KEY (id_profesional) REFERENCES profesional(user_id)
+    FOREIGN KEY (id_profesional) REFERENCES profesional(user_id),
+    FOREIGN KEY (id_diagnostico) REFERENCES diagnostico(id_diagnostico)
 )ENGINE=InnoDB;
 
 
@@ -89,6 +94,8 @@ INSERT INTO usuario (usuario, email, password, tipo_usuario) VALUES ("Marta Suar
 INSERT INTO usuario (usuario, email, password, tipo_usuario) VALUES ("Sancho Panza","sancho@panza.com","$2y$14$2rsfo2FNNiPQudnrZxDrb.xAkb/dqvocWqT1LwCUp7/KAoY/1MDPe",2);
 INSERT INTO usuario (usuario, email, password, tipo_usuario) VALUES ("Ariana Pequeña","ariana@pequeña.com","$2y$14$2Y4NYocr2K7FNIWZVZfyeuF4iZKkL1VzqFMEzLsOQRq5dlIHf77UC",2);
 
+
+
 /* Esos mismos profesionales deben estar en la tabla de profesionales */
 INSERT INTO profesional (user_id, nombre_profesional) VALUES (1,"Oscar Eroles");
 INSERT INTO profesional (user_id, nombre_profesional) VALUES (2,"Santiago Perolillos");
@@ -101,6 +108,12 @@ INSERT INTO profesional (user_id, nombre_profesional) VALUES (8,"Marta Suarez");
 INSERT INTO profesional (user_id, nombre_profesional) VALUES (9,"Sancho Panza");
 INSERT INTO profesional (user_id, nombre_profesional) VALUES (10,"Ariana Pequeña");
 
+/* Metemos unos cuantos pacientes */
+INSERT INTO usuario (usuario, email, password, tipo_usuario) VALUES ("Joan Corto","joan@corto.com","$2y$14$VohThqmJbQq9rw3Tk4NeL.E0zuN0t7QM0xJEV6E6RLvKuBI5Fh1W6",1);
+
+INSERT INTO paciente (user_id, nombre_paciente) VALUES (11,"Joan Corto");
+
+INSERT INTO asignacion (id_paciente, id_profesional) VALUES (11, 7);
 
 /* Darles algunas especialidades */
 INSERT INTO especializa (id_profesional, especialidad) VALUES (1,"Ansiedad");

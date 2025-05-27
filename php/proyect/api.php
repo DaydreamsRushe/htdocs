@@ -90,6 +90,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo json_encode($usercontroller->create($createData));
             break;
 
+        case 'client-list':
+            echo $usercontroller->clients($data['id']);
+            break;
 
         default:
             echo json_encode(['error' => 'Acción no válida']);

@@ -1,6 +1,7 @@
 <?php
-require_once 'config/config.php';
 
+require_once 'config/config.php';
+/* Clase con funciones para conectarnos a la base de datos y así poder hacer peticiones a partir de PDO */
 class Connection {
     private $conn;
 

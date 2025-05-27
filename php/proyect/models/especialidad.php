@@ -1,5 +1,5 @@
 <?php
-
+  /* Clase para funciones especificas de la tabla especializa */
   class Especialidad {
     private $conn;
     private const TABLE_NAME = "especializa";

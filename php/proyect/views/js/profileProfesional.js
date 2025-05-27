@@ -14,6 +14,7 @@ const elementos = {
 };
 
 const dataManager = {
+  /* Funcion para mostrar los datos del usuario */
   cargarDatosPersonales() {
     elementos.personalData.innerHTML = dataManager.crearHTMLPersonal();
   },
@@ -34,10 +35,13 @@ const dataManager = {
     );
   },
 
+  /* Funcion para cambiar el diagnostico por uno conocido */
   diagnostico($campoDiagnostico) {},
 
+  /* Funcion para cambiar o asignar medicamento, este se buscara en la api CIMA para medicamentos autorizados en España. buscaremos medicamentos a partir del principio activo que pueda tratar al paciente*/
   medicar($diagnostico, $campoMedicamento) {},
 
+  /* Crea una fila por cada cliente que tiene el profesional asignado */
   crearcliente(dato) {
     const fila = document.createElement("tr");
     fila.innerHTML = dataManager.generarHTMLclient(dato);
@@ -46,6 +50,7 @@ const dataManager = {
     return fila;
   },
 
+  /* Muestra todos los pacientes asignados que tiene el profesional, pidiendo esta lista al servidor */
   cargarPacientes() {
     elementos.pacientes.innerHTML = "";
     fetch("api.php", {
@@ -83,6 +88,7 @@ const dataManager = {
       });
   },
 
+  /* Crea el HTML para los datos personales del Profesional */
   crearHTMLPersonal() {
     return `
         <h3>Datos personales</h3>
@@ -97,6 +103,7 @@ const dataManager = {
     `;
   },
 
+  /* Crea el HTML para las filas en la tabla de pacientes asignados, juntamente con botones para modificar medicacion o diagnostico */
   generarHTMLclient(dato) {
     return `
       <td>${dato.user_id}</td>
@@ -111,12 +118,15 @@ const dataManager = {
   },
 };
 
+/* Al cargar la pagina */
 document.addEventListener("DOMContentLoaded", () => {
+  /* Definimos el evento para el boton de cerrar sesion y devolvemos el usuario a la pagina indice */
   document.querySelector("#btn-cerrar").addEventListener("click", () => {
     localStorage.removeItem("userData");
     window.location.href = "index.php";
   });
 
+  /* Cargamos los datos del perfil */
   dataManager.cargarDatosPersonales();
   dataManager.cargarPacientes();
 });

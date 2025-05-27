@@ -86,7 +86,7 @@
     }
 
     public function clients($id){
-        $query = "SELECT * FROM paciente WHERE user_id in (SELECT id_paciente FROM asignacion WHERE id_profesional = :id)";
+        $query = "SELECT * FROM paciente p JOIN diagnostico d ON p.id_diagnostico = d.id_diagnostico WHERE user_id in (SELECT id_paciente FROM asignacion WHERE id_profesional = :id)";
         $stmt = $this->db->prepare($query);
         $stmt->execute([':id' => $id]);
         $clients = $stmt->fetchAll(PDO::FETCH_ASSOC);

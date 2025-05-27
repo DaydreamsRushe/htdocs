@@ -24,6 +24,7 @@ const elementos = {
 };
 
 const utilidades = {
+  /* Muestra mensajes de error, creando una ventana justo debajo del formulario */
   mostrarMensaje: (mensaje, esError = false) => {
     let mensajeElement = document.querySelector(".mensaje-usuario");
     if (!mensajeElement) {
@@ -73,51 +74,48 @@ const utilidades = {
   },
 };
 
-
 const dataManager = {
-    async insertarDato() {
-        const formData = new FormData();
-        formData.append("action", "create");
-        formData.append("nombre", elementos.nombre.value);
-        formData.append("email", elementos.email.value);
-        formData.append("password", elementos.password.value);
-        formData.append("tipo_usuario", elementos.tipo_usuario.value);
+  async insertarDato() {
+    const formData = new FormData();
+    formData.append("action", "create");
+    formData.append("nombre", elementos.nombre.value);
+    formData.append("email", elementos.email.value);
+    formData.append("password", elementos.password.value);
+    formData.append("tipo_usuario", elementos.tipo_usuario.value);
 
-        if (elementos.foto.files.length > 0) {
-        if (!utilidades.validarArchivo(elementos.foto.files[0])) {
-            return;
-        }
-        formData.append("foto", elementos.foto.files[0]);
-        }
+    if (elementos.foto.files.length > 0) {
+      if (!utilidades.validarArchivo(elementos.foto.files[0])) {
+        return;
+      }
+      formData.append("foto", elementos.foto.files[0]);
+    }
 
-        try {
-            const response = await fetch(CONSTANTES.API_ENDPOINT, {
-                method: "POST",
-                body: formData,
-            });
+    try {
+      const response = await fetch(CONSTANTES.API_ENDPOINT, {
+        method: "POST",
+        body: formData,
+      });
 
-            const result = await response.json();
+      const result = await response.json();
 
-            if (result.error) {
-                utilidades.mostrarMensaje(result.error, true);
-            } else {
-                utilidades.mostrarMensaje(result.mensaje);
-                utilidades.restablecerFormulario();
-            }
-        } catch (error) {
-            utilidades.mostrarMensaje("Error al insertar: " + error.message, true);
-        }
-    },
-
-  
+      if (result.error) {
+        utilidades.mostrarMensaje(result.error, true);
+      } else {
+        utilidades.mostrarMensaje(result.mensaje);
+        utilidades.restablecerFormulario();
+      }
+    } catch (error) {
+      utilidades.mostrarMensaje("Error al insertar: " + error.message, true);
+    }
+  },
 };
 
 document.addEventListener("DOMContentLoaded", () => {
-    document.querySelector("#btn-sesion").addEventListener("click", () => {
-        document.location.href = "login.php";
-    });
+  document.querySelector("#btn-sesion").addEventListener("click", () => {
+    document.location.href = "login.php";
+  });
 
-    document.querySelector("#formUsuario").addEventListener("submit", (e) => {
+  document.querySelector("#formUsuario").addEventListener("submit", (e) => {
     e.preventDefault();
     dataManager.insertarDato();
   });
@@ -140,7 +138,4 @@ document.addEventListener("DOMContentLoaded", () => {
   elementos.btnBorrar.addEventListener("click", () =>
     utilidades.restablecerFormulario()
   );
-
-  
-
 });

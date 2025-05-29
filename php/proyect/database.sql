@@ -1,4 +1,4 @@
--- Active: 1741626660969@@127.0.0.1@3306@serenalive
+-- Active: 1748019110775@@127.0.0.1@3306@serenalive
 DROP DATABASE IF EXISTS serenalive;
 
 CREATE DATABASE  serenalive DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

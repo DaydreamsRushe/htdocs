@@ -46,3 +46,13 @@ function profileClient($lang)
 {
   require 'views/tpl/profileClient.tpl';
 }
+
+function conoce($lang)
+{
+  require 'views/tpl/conoce.tpl';
+}
+
+function contacto($lang)
+{
+  require 'views/tpl/contacto.tpl';
+}

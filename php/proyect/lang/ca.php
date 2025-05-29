@@ -88,4 +88,26 @@ $lang_client = [
     "catalan" => "Catala",
     "cerrar" => "Tancar sessió"
 ];
+
+$lang_conoce = [
+    "title" => "SerenaLive - Conegueu-nos",
+    "conocenos" => "Conegueu-nos",
+    "somos" => "Els nostres psicolegs",
+    "contacto" => "Contacte",
+    "idioma" => "Idioma",
+    "castellano" => "Castella",
+    "catalan" => "Catala",
+    "inicio" => "Iniciar sessió"
+];
+
+$lang_contacto = [
+    "title" => "SerenaLive - Contacte",
+    "conocenos" => "Conegueu-nos",
+    "somos" => "Els nostres psicolegs",
+    "contacto" => "Contacte",
+    "idioma" => "Idioma",
+    "castellano" => "Castella",
+    "catalan" => "Catala",
+    "inicio" => "Iniciar sessió"
+];
 ?>

@@ -18,11 +18,11 @@
           <a class="brand" href="index.php">SerenaLive</a>
           <nav class="head-menu">
             <section>
-              <article><a class="head-option" href=""><?php echo $lang['conocenos']; ?></a></article>
+              <article><a class="head-option" href="conoce.php"><?php echo $lang['conocenos']; ?></a></article>
               <article>
                 <a class="head-option" href="psicologos.php"><?php echo $lang['somos']; ?></a>
               </article>
-              <article><a class="head-option" href=""><?php echo $lang['contacto']; ?></a></article>
+              <article><a class="head-option" href="contacto.php"><?php echo $lang['contacto']; ?></a></article>
             </section>
             <section class="form-inline">
               <div name="lang">
@@ -40,9 +40,9 @@
               <button class="btn btn-primary" id="btn-sesion">
                 <?php echo $lang['inicio']; ?>
               </button>
-              <li><a class="head-option" href=""><?php echo $lang['conocenos']; ?></a></li>
-              <li><a class="head-option" href=""><?php echo $lang['somos']; ?></a></li>
-              <li><a class="head-option" href=""><?php echo $lang['contacto']; ?></a></li>
+              <li><a class="head-option" href="conoce.php"><?php echo $lang['conocenos']; ?></a></li>
+              <li><a class="head-option" href="psicologos.php"><?php echo $lang['somos']; ?></a></li>
+              <li><a class="head-option" href="contacto.php"><?php echo $lang['contacto']; ?></a></li>
           </nav>
         </div>
       </div>
@@ -95,11 +95,11 @@
     </main>
     <footer>
         <section>
-          <article><a class="foot-option" href=""><?php echo $lang['conocenos']; ?></a></article>
+          <article><a class="foot-option" href="conoce.php"><?php echo $lang['conocenos']; ?></a></article>
           <article>
             <a class="foot-option" href="psicologos.php"><?php echo $lang['somos']; ?></a>
           </article>
-          <article><a class="foot-option" href=""><?php echo $lang['contacto']; ?></a></article>
+          <article><a class="foot-option" href="contacto.php"><?php echo $lang['contacto']; ?></a></article>
           <article><a class="foot-option"  id="btn-sesion" href="login.php"><?php echo $lang['inicio']; ?></a></article>
         </section>
      </footer>

@@ -54,11 +54,14 @@
       </section>
       <section id="client-list">
         <div class="form-container">
+          <h3>Lista de pacientes asignados</h3>
           <table>
             <thead>
               <tr>
                 <th>ID</th>
                 <th>Cliente</th>
+                <th>Diagnostico</th>
+                <th>Medicacion</th>
               </tr>
             </thead>
             <tbody id="tablaClient"></tbody>

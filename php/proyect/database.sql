@@ -1,4 +1,4 @@
--- Active: 1748019110775@@127.0.0.1@3306@serenalive
+-- Active: 1741626660969@@127.0.0.1@3306@serenalive
 DROP DATABASE IF EXISTS serenalive;
 
 CREATE DATABASE  serenalive DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -14,19 +14,6 @@ CREATE TABLE usuario (
     CONSTRAINT chk_tipo_usuario CHECK (tipo_usuario IN (1, 2))
 )ENGINE=InnoDB;
 
-CREATE TABLE paciente (
-    user_id INT PRIMARY KEY,
-    nombre_paciente VARCHAR(50) NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES usuario(id)
-)ENGINE=InnoDB;
-
-CREATE TABLE profesional (
-    user_id INT PRIMARY KEY,
-    nombre_profesional VARCHAR(50) NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES usuario(id)
-)ENGINE=InnoDB;
-
-
 CREATE TABLE enfermedad (
   nombre_enfermedad VARCHAR(50) PRIMARY KEY,
   nombre_farmaco VARCHAR(50)
@@ -39,6 +26,23 @@ CREATE TABLE diagnostico (
     farmaco VARCHAR(50),
     FOREIGN KEY (nombre_dolencia) REFERENCES enfermedad(nombre_enfermedad)
 )ENGINE=InnoDB;
+
+CREATE TABLE paciente (
+    user_id INT PRIMARY KEY,
+    nombre_paciente VARCHAR(50) NOT NULL,
+    id_diagnostico INT,
+    FOREIGN KEY (user_id) REFERENCES usuario(id),
+    FOREIGN KEY (id_diagnostico) REFERENCES diagnostico(id_diagnostico)
+)ENGINE=InnoDB;
+
+CREATE TABLE profesional (
+    user_id INT PRIMARY KEY,
+    nombre_profesional VARCHAR(50) NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES usuario(id)
+)ENGINE=InnoDB;
+
+
+
 
 CREATE TABLE especializa (
     id_profesional INT,
@@ -111,7 +115,9 @@ INSERT INTO profesional (user_id, nombre_profesional) VALUES (10,"Ariana Pequeñ
 /* Metemos unos cuantos pacientes */
 INSERT INTO usuario (usuario, email, password, tipo_usuario) VALUES ("Joan Corto","joan@corto.com","$2y$14$VohThqmJbQq9rw3Tk4NeL.E0zuN0t7QM0xJEV6E6RLvKuBI5Fh1W6",1);
 
-INSERT INTO paciente (user_id, nombre_paciente) VALUES (11,"Joan Corto");
+INSERT INTO diagnostico (id_diagnostico, nombre_dolencia, farmaco) VALUES (1, "Ansiedad", "Calmantes");
+
+INSERT INTO paciente (user_id, nombre_paciente, id_diagnostico) VALUES (11,"Joan Corto",1);
 
 INSERT INTO asignacion (id_paciente, id_profesional) VALUES (11, 7);
 

@@ -1,4 +1,6 @@
 <?php
+
+/* Guardamos variables para cada uno de los textos que aparecen en las diferentes paginas de la aplicación, para el lenguaje catalan */
 $lang_index = [
     "title" => "SerenaLive - Inici",
     "conocenos" => "Conegueu-nos",

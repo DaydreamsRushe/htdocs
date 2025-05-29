@@ -1,4 +1,6 @@
 <?php
+
+  /* Clase especifica para las funciones especificas de la tabla profesional */
   class Profesional{
     private $conn;
     private const TABLE_NAME = "profesional";

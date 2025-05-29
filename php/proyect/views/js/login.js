@@ -1,19 +1,17 @@
+/* Al cargar la pagina */
 document.addEventListener("DOMContentLoaded", function () {
   const loginForm = document.querySelector("#loginForm");
 
   // Verificamos si ya está logueado
   const userData = JSON.parse(localStorage.getItem("userData"));
   if (userData) {
-    tip_user = JSON.parse(localStorage['userData'])['tipo_usuario'];
-    if(tip_user === 2)
-      {
-        window.location.href = "profileProfesional.php";
-      }
-    else if(tip_user === 1)
-      {
-        window.location.href = "profileClient.php";
-      }
-    
+    tip_user = JSON.parse(localStorage["userData"])["tipo_usuario"];
+    /* Si ya esta logueado, lo enviamos a la pagina que le pertoca por tipo de usuario */
+    if (tip_user === 2) {
+      window.location.href = "profileProfesional.php";
+    } else if (tip_user === 1) {
+      window.location.href = "profileClient.php";
+    }
   }
 
   // Expresiones regulares para validación
@@ -22,7 +20,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const regexPassword =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#*])[a-zA-Z\d!@#*]{6,10}$/;
 
+  /* Evento para el boton de inicio de sesion del formulario */
   loginForm.addEventListener("submit", function (e) {
+    /* previene que la tecla presionada active una accion no deseada */
     e.preventDefault();
 
     const email = document.querySelector("#email").value;
@@ -77,13 +77,13 @@ document.addEventListener("DOMContentLoaded", function () {
               email: data.user.email,
               tipo_usuario: data.user.tipo_usuario,
               nombre: data.user.nombre,
-              foto: data.user.foto
+              foto: data.user.foto,
             })
           );
-          tip_user = JSON.parse(localStorage['userData'])['tipo_usuario'];
-          if(tip_user === 2){
+          tip_user = JSON.parse(localStorage["userData"])["tipo_usuario"];
+          if (tip_user === 2) {
             window.location.href = "profileProfesional.php";
-          }else if(tip_user === 1){
+          } else if (tip_user === 1) {
             window.location.href = "profileClient.php";
           }
         } else {

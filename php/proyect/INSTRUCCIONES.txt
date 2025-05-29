@@ -1,0 +1,13 @@
+el archivo database.sql esta listo para ejecutarse una vez conectado a un servidor y que este cree la base de datos, con todos los datos necesarios para probar el codigo.
+
+Actualmente hay 10 usuarios profesionales y solo un paciente, el cual incluye un diagnostico y esta asociado a un usuarios
+
+Para acceder como paciente:
+Email: joan@corto.com
+Password: Joan123@
+
+Todos los usuarios tienen como mail nombre@apellido.com y como contraseña Nombre123@ (primera letra mayuscula, el resto minuscula).
+
+Para comprovar el enlace de paciente y profesional, utilizar el usuario de Jose Ortega:
+Email jose@ortega.com
+Password: Jose123@

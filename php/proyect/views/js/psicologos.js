@@ -40,8 +40,10 @@ const utilidades = {
 };
 
 const dataManager = {
+  /* Mostramos todos los datos por filas de todos los psicologos que se encuentran en nuestra base de datos junto con las especialidades de cada uno */
   async cargarDatos() {
     try {
+      /* Pedimos los datos a servidor */
       const response = await fetch(CONSTANTES.API_ENDPOINT);
       const datos = await response.json();
       dataManager.mostrarDatos(datos);
@@ -53,11 +55,12 @@ const dataManager = {
     }
   },
 
+  /* Añade los datos en el espacio definido para la tabla */
   mostrarDatos(datos) {
     elementos.tablaDatos.innerHTML = "";
 
     datos.forEach((dato) => {
-        console.log(dato);
+      console.log(dato);
       const fila = dataManager.crearFila(dato);
       elementos.tablaDatos.appendChild(fila);
     });
@@ -70,6 +73,7 @@ const dataManager = {
     return fila;
   },
 
+  /*  Genera el HTML de cada fila para los psicologos */
   generarHTMLFila(dato) {
     return `
       <td>${dato.id}</td>
@@ -91,7 +95,7 @@ const dataManager = {
 };
 
 document.addEventListener("DOMContentLoaded", () => {
-
+  /* Definimos el evento para el boton de inicio de sesion */
   document.querySelector("#btn-sesion").addEventListener("click", () => {
     document.location.href = "login.php";
   });

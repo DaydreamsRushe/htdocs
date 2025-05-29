@@ -1,3 +1,4 @@
+/* Datos genericos constantes necesarios para distintas tareas */
 const CONSTANTES = {
   API_ENDPOINT: "api.php",
   MAX_FILE_SIZE: 2 * 1024 * 1024, // 2MB
@@ -7,11 +8,13 @@ const CONSTANTES = {
   FADE_OUT: 500,
 };
 
+/* Guardamos los tipos de usuario en una constante */
 const TIPOS_USUARIO = {
   CLIENTE: 1,
   PROFESIONAL: 2,
 };
 
+/* Listado de elementos en la pagina de creacion de usuarios */
 const elementos = {
   btnInsertar: document.querySelector("#btnInsertar"),
   btnBorrar: document.querySelector("#btnBorrar"),
@@ -24,6 +27,7 @@ const elementos = {
 };
 
 const utilidades = {
+  /* Muestra mensajes de error, creando una ventana justo debajo del formulario */
   mostrarMensaje: (mensaje, esError = false) => {
     let mensajeElement = document.querySelector(".mensaje-usuario");
     if (!mensajeElement) {
@@ -44,6 +48,7 @@ const utilidades = {
     }, CONSTANTES.TIMEOUT_MENSAJE);
   },
 
+  /* una pequeña funcion para vaciar los campos del formulario */
   restablecerFormulario: () => {
     elementos.nombre.value = "";
     elementos.email.value = "";
@@ -52,6 +57,7 @@ const utilidades = {
     elementos.foto.value = "";
   },
 
+  /* Funcion para validar el archivo adjunto para las fotos en la creacion de usuario */
   validarArchivo: (file) => {
     if (file.size > CONSTANTES.MAX_FILE_SIZE) {
       utilidades.mostrarMensaje(
@@ -73,51 +79,55 @@ const utilidades = {
   },
 };
 
-
+/* Agrupacion de funciones para la gestion de datos */
 const dataManager = {
-    async insertarDato() {
-        const formData = new FormData();
-        formData.append("action", "create");
-        formData.append("nombre", elementos.nombre.value);
-        formData.append("email", elementos.email.value);
-        formData.append("password", elementos.password.value);
-        formData.append("tipo_usuario", elementos.tipo_usuario.value);
+  /* Funcion que inserta un nuevo usuario a partir de los datos untroducidos en el formulario */
+  async insertarDato() {
+    const formData = new FormData();
+    formData.append("action", "create");
+    formData.append("nombre", elementos.nombre.value);
+    formData.append("email", elementos.email.value);
+    formData.append("password", elementos.password.value);
+    formData.append("tipo_usuario", elementos.tipo_usuario.value);
 
-        if (elementos.foto.files.length > 0) {
-        if (!utilidades.validarArchivo(elementos.foto.files[0])) {
-            return;
-        }
-        formData.append("foto", elementos.foto.files[0]);
-        }
+    /* Dado que la foto es opcional, solamente se valida si esta se ha introducido solamente */
+    if (elementos.foto.files.length > 0) {
+      if (!utilidades.validarArchivo(elementos.foto.files[0])) {
+        return;
+      }
+      formData.append("foto", elementos.foto.files[0]);
+    }
 
-        try {
-            const response = await fetch(CONSTANTES.API_ENDPOINT, {
-                method: "POST",
-                body: formData,
-            });
+    /* Usamos un try-catch para mandar los datos a nuestra api interna via POST y que esta nos confirme que se ha realizado correctamente */
+    try {
+      const response = await fetch(CONSTANTES.API_ENDPOINT, {
+        method: "POST",
+        body: formData,
+      });
 
-            const result = await response.json();
+      const result = await response.json();
 
-            if (result.error) {
-                utilidades.mostrarMensaje(result.error, true);
-            } else {
-                utilidades.mostrarMensaje(result.mensaje);
-                utilidades.restablecerFormulario();
-            }
-        } catch (error) {
-            utilidades.mostrarMensaje("Error al insertar: " + error.message, true);
-        }
-    },
-
-  
+      if (result.error) {
+        utilidades.mostrarMensaje(result.error, true);
+      } else {
+        utilidades.mostrarMensaje(result.mensaje);
+        utilidades.restablecerFormulario();
+      }
+    } catch (error) {
+      utilidades.mostrarMensaje("Error al insertar: " + error.message, true);
+    }
+  },
 };
 
+/* Definimos un conjunto de eventos en el momento de que la pagina se haya cargado */
 document.addEventListener("DOMContentLoaded", () => {
-    document.querySelector("#btn-sesion").addEventListener("click", () => {
-        document.location.href = "login.php";
-    });
+  /* Evento para el boton de "iniciar sesion" */
+  document.querySelector("#btn-sesion").addEventListener("click", () => {
+    document.location.href = "login.php";
+  });
 
-    document.querySelector("#formUsuario").addEventListener("submit", (e) => {
+  /* Evento para el boton de crear usuario */
+  document.querySelector("#formUsuario").addEventListener("submit", (e) => {
     e.preventDefault();
     dataManager.insertarDato();
   });
@@ -128,6 +138,7 @@ document.addEventListener("DOMContentLoaded", () => {
     { elemento: elementos.password, id: "password" },
   ];
 
+  /* Como metodo alternativo, podemos presionar la tecla "Enter" para realizar la creacion del usuario */
   camposFormulario.forEach((campo) => {
     campo.elemento.addEventListener("keypress", (e) => {
       if (e.key === "Enter") {
@@ -137,10 +148,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  /* Evento para borrar los campos del formulario con un boton */
   elementos.btnBorrar.addEventListener("click", () =>
     utilidades.restablecerFormulario()
   );
-
-  
-
 });
